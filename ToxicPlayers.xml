@@ -1,0 +1,19 @@
+<GuiXml>
+    <Controls>
+        <TopLevelControl name="ToxicPlayers">
+            <Dimensions x="110" y="110"/>
+            <Anchor point="CENTER" relativeTo="ZO_ReticleContainerReticle" offsetX="0" offsetY="-91" />    
+            <Controls>
+                <Label name="$(parent)UnitName" font="$(BOLD_FONT)|18|soft-shadow-thin" text="" hidden="true" horizontalAlignment="CENTER" verticalAlignment="BOTTOM" wrapMode="ELLIPSIS">
+                    <AnchorFill />
+                </Label>
+            </Controls>
+            <Controls>
+                <Texture name="$(parent)UnitIcon" hidden="true" tier="HIGH">
+                    <Dimensions x="48" y="48"/>
+                    <Anchor point="TOP" relativeTo="ZO_ReticleContainerReticle" offsetY="65" />
+                </Texture>
+            </Controls>
+        </TopLevelControl>
+    </Controls>
+</GuiXml>
