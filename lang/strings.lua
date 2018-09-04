@@ -19,11 +19,11 @@ local strings = {
     TOXICPLAYERS_OPTION_DISPLAY_GUILD_DESCRIPTION = "Activate ToxicPlayer over guild players",
     TOXICPLAYERS_OPTION_DISPLAY_GUILD_TOOLTIP = "If deactivated, ToxicPlayers will not notify you about the guildmates you encounter",
 
-	TOXICPLAYERS_SI_FRIEND_PLAYER_INFO = "You met your friend [<<1>>]",
-	TOXICPLAYERS_SI_MUTED_PLAYER_INFO = "You met [<<1>>]",
-	TOXICPLAYERS_SI_GUILD_PLAYER_INFO = "You met [<<1>>] from [<<2>>]",
-	TOXICPLAYERS_SI_IGNORE_NOTE = "Ignore note for [<<1>>]: <<2>>",
-	TOXICPLAYERS_SI_NO_IGNORE_NOTE = "No ignore note for [<<1>>]",
+	TOXICPLAYERS_SI_FRIEND_PLAYER_INFO = "You met your friend <<1>>",
+	TOXICPLAYERS_SI_MUTED_PLAYER_INFO = "You met <<1>>",
+	TOXICPLAYERS_SI_GUILD_PLAYER_INFO = "You met <<1>> from [<<2>>]",
+	TOXICPLAYERS_SI_IGNORE_NOTE = "Ignore note for <<1>>: <<2>>",
+	TOXICPLAYERS_SI_NO_IGNORE_NOTE = "No ignore note for <<1>>",
 	
 	SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED = "Add/remove target from ignore list",
 	SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED_WITH_NOTE = "Add/remove target from ignore list and edit ignore note",

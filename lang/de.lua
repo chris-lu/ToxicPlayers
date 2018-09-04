@@ -18,11 +18,11 @@ SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_IGNORED_TOOLTIP,     "Ist diese Option
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILD_DESCRIPTION,   "Aktiviere ToxicPlayer über Gilde Spieler", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILD_TOOLTIP,       "Ist diese Option deaktiviert, denn ToxicPlayers wird nicht aktiviert, wenn du einen Gilde Spieler triffst", 1)
 
-SafeAddString(TOXICPLAYERS_SI_FRIEND_PLAYER_INFO,      "Du hast deinen Freund [<<1>>] getroffen", 1)
-SafeAddString(TOXICPLAYERS_SI_MUTED_PLAYER_INFO,       "Du hast [<<1>>] getroffen", 1)
-SafeAddString(TOXICPLAYERS_SI_GUILD_PLAYER_INFO,       "Du hast [<<1>>] getroffen, von [<<2>>]", 1)
-SafeAddString(TOXICPLAYERS_SI_IGNORE_NOTE,             "Ignoriert Notiz für [<<1>>]: <<2>>", 1)
-SafeAddString(TOXICPLAYERS_SI_NO_IGNORE_NOTE,          "Keine Notizen für den ignorierten Spieler [<<1>>]", 1)
+SafeAddString(TOXICPLAYERS_SI_FRIEND_PLAYER_INFO,      "Du hast deinen Freund <<1>> getroffen", 1)
+SafeAddString(TOXICPLAYERS_SI_MUTED_PLAYER_INFO,       "Du hast <<1>> getroffen", 1)
+SafeAddString(TOXICPLAYERS_SI_GUILD_PLAYER_INFO,       "Du hast <<1>> getroffen, von [<<2>>]", 1)
+SafeAddString(TOXICPLAYERS_SI_IGNORE_NOTE,             "Ignoriert Notiz für <<1>>: <<2>>", 1)
+SafeAddString(TOXICPLAYERS_SI_NO_IGNORE_NOTE,          "Keine Notizen für den ignorierten Spieler <<1>>", 1)
 
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED,             "Hinzufügen/Entfernen Spieler (Ignoriert Liste)", 1)
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED_WITH_NOTE,   "Hinzufügen/Entfernen Spieler (Ignoriert Liste) + Notiz", 1)

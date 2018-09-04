@@ -22,9 +22,9 @@ SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_IGNORED_TOOLTIP,     "If deactivated, 
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILD_DESCRIPTION,   "Activate ToxicPlayer over guild players", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILD_TOOLTIP,       "If deactivated, ToxicPlayers will not notify you about the guildmates you encounter", 1)
 
-SafeAddString(TOXICPLAYERS_SI_FRIEND_PLAYER_INFO,      "You met your friend [<<1>>]", 1)
-SafeAddString(TOXICPLAYERS_SI_MUTED_PLAYER_INFO,       "You met [<<1>>]", 1)
-SafeAddString(TOXICPLAYERS_SI_GUILD_PLAYER_INFO,       "You met [<<1>>] from [<<2>>]", 1)
+SafeAddString(TOXICPLAYERS_SI_FRIEND_PLAYER_INFO,      "You met your friend <<1>>", 1)
+SafeAddString(TOXICPLAYERS_SI_MUTED_PLAYER_INFO,       "You met <<1>>", 1)
+SafeAddString(TOXICPLAYERS_SI_GUILD_PLAYER_INFO,       "You met <<1>> from [<<2>>]", 1)
 SafeAddString(TOXICPLAYERS_SI_IGNORE_NOTE,             "Ignore note for <<1>>: <<2>>", 1)
 SafeAddString(TOXICPLAYERS_SI_NO_IGNORE_NOTE,          "No ignore note for <<1>>", 1)
 

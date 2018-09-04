@@ -5,7 +5,7 @@ ToxicPlayers = {
         type = "panel",
         name = "Toxic Players",
         author = "mouton",
-        version = "0.11"
+        version = "1.0"
     },
 
     settings = {},
@@ -116,17 +116,18 @@ end
 function TP.getPlayerInfo()
     if TP.isSocialAllowed() and latestPlayer then
         local formatedNote = nil
+        local link = ZO_LinkHandler_CreateDisplayNameLink(latestPlayer.playerName)
         
         if latestPlayer.playerType == TYPE_FRIENDS then
-            formatedNote = zo_strformat(TOXICPLAYERS_SI_FRIEND_PLAYER_INFO, latestPlayer.playerName)
+            formatedNote = zo_strformat(TOXICPLAYERS_SI_FRIEND_PLAYER_INFO, link)
         elseif latestPlayer.playerType == TYPE_GUILD then
-            formatedNote = zo_strformat(TOXICPLAYERS_SI_GUILD_PLAYER_INFO, latestPlayer.playerName, guildMates[latestPlayer.playerName])
+            formatedNote = zo_strformat(TOXICPLAYERS_SI_GUILD_PLAYER_INFO, link, guildMates[latestPlayer.playerName])
         elseif latestPlayer.playerType == TYPE_MUTED then
-            formatedNote = zo_strformat(TOXICPLAYERS_SI_MUTED_PLAYER_INFO, latestPlayer.playerName)
+            formatedNote = zo_strformat(TOXICPLAYERS_SI_MUTED_PLAYER_INFO, link)
         else
             local playerNote = TP.GetPlayerIgnoreNote(latestPlayer.playerName)
             if playerNote then 
-                formatedNote = (playerNote == "") and zo_strformat(TOXICPLAYERS_SI_NO_IGNORE_NOTE, latestPlayer.playerName) or zo_strformat(TOXICPLAYERS_SI_IGNORE_NOTE, latestPlayer.playerName, playerNote)
+                formatedNote = (playerNote == "") and zo_strformat(TOXICPLAYERS_SI_NO_IGNORE_NOTE, link) or zo_strformat(TOXICPLAYERS_SI_IGNORE_NOTE, link, playerNote)
             end
         end
         
