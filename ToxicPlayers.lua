@@ -14,7 +14,7 @@ ToxicPlayers = {
         displayIcon = true ,
         displayOnIgnored = true, 
         displayOnMuted = true,
-        displayOnGuild = false,
+        displayOnGuild = true,
         displayOnFriends = true,
         variableVersion = 1
     },
