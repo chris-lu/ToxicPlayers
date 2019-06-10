@@ -7,6 +7,7 @@ SafeAddString(TOXICPLAYERS_IGNORED, "Ignored", 1)
 SafeAddString(TOXICPLAYERS_MUTED,   "Muted", 1)
 SafeAddString(TOXICPLAYERS_FRIEND,  "Friend", 1)
 SafeAddString(TOXICPLAYERS_GUILD,   "Guild", 1)
+SafeAddString(TOXICPLAYERS_GUILD_BLACKLIST,   "Blacklisted", 1)
 
 SafeAddString(TOXICPLAYERS_OPTION_DESCRITPION,                 "ToxicPlayers is adding visual information to your reticle when targeting a muted or ignored player.", 1)
 SafeAddString(TOXICPLAYERS_OPTION_RETICLE_TEXT_DESCRIPTION,    "Display a status text for the targeted players", 1)
@@ -21,11 +22,14 @@ SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_IGNORED_DESCRIPTION, "Activate ToxicPl
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_IGNORED_TOOLTIP,     "If deactivated, ToxicPlayers will not notify you about the ignored players you encounter", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILD_DESCRIPTION,   "Activate ToxicPlayer over guild players", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILD_TOOLTIP,       "If deactivated, ToxicPlayers will not notify you about the guildmates you encounter", 1)
+SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILDBLACKLIST_DESCRIPTION,   "Activate ToxicPlayer over guild banned players", 1)
+SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILDBLACKLIST_TOOLTIP,       "If deactivated, ToxicPlayers will not notify you about the guild blacklisted you encounter", 1)
 
 SafeAddString(TOXICPLAYERS_SI_FRIEND_PLAYER_INFO,      "You met your friend <<1>>", 1)
 SafeAddString(TOXICPLAYERS_SI_MUTED_PLAYER_INFO,       "You met <<1>>", 1)
 SafeAddString(TOXICPLAYERS_SI_GUILD_PLAYER_INFO,       "You met <<1>> from [<<2>>]", 1)
 SafeAddString(TOXICPLAYERS_SI_IGNORE_NOTE,             "Ignore note for <<1>>: <<2>>", 1)
+SafeAddString(TOXICPLAYERS_SI_BANNED_NOTE,             "Banned note for <<1>>: <<2>>", 1)
 SafeAddString(TOXICPLAYERS_SI_NO_IGNORE_NOTE,          "No ignore note for <<1>>", 1)
 
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED,             "Add/remove target from ignore list", 1)

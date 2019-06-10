@@ -57,8 +57,16 @@ function ToxicPlayers:CreateAddonMenu()
             getFunc = function() return TP.settings.displayOnGuild end,
             setFunc = function(value) TP.settings.displayOnGuild = value end,
             width = "full"
-        },        
+        },
         [8] = {
+            type = "checkbox",
+            name = GetString(TOXICPLAYERS_OPTION_DISPLAY_GUILDBLACKLIST_DESCRIPTION),
+            tooltip = GetString(TOXICPLAYERS_OPTION_DISPLAY_GUILDBLACKLIST_TOOLTIP),
+            getFunc = function() return TP.settings.displayOnGuildBlacklist end,
+            setFunc = function(value) TP.settings.displayOnGuildBlacklist = value end,
+            width = "full"
+        },  
+        [9] = {
             type = "checkbox",
             name = GetString(TOXICPLAYERS_OPTION_DISPLAY_IGNORED_DESCRIPTION),
             tooltip = GetString(TOXICPLAYERS_OPTION_DISPLAY_IGNORED_TOOLTIP),

@@ -1,3 +1,4 @@
+
 ToxicPlayers = {
     name = "ToxicPlayers",
     
@@ -5,7 +6,7 @@ ToxicPlayers = {
         type = "panel",
         name = "Toxic Players",
         author = "mouton",
-        version = "1.0"
+        version = "1.2"
     },
 
     settings = {},
@@ -15,8 +16,9 @@ ToxicPlayers = {
         displayOnIgnored = true, 
         displayOnMuted = true,
         displayOnGuild = true,
+        displayOnGuildBlacklist = true,
         displayOnFriends = true,
-        variableVersion = 1
+        variableVersion = 2
     },
     
     STYLES = {
@@ -24,13 +26,14 @@ ToxicPlayers = {
         IGNORED = { color = ZO_ColorDef:New(1, 0.2, 0.2, .9), icon = '/esoui/art/contacts/tabicon_ignored_up.dds' },
         MUTED =   { color = ZO_ColorDef:New(1, 0.6, 0.2, .9), icon = '/esoui/art/contacts/tabicon_ignored_up.dds' },
         GUILD =   { color = ZO_ColorDef:New(0.6, 0.7, 1, 1),  icon = '/esoui/art/mainmenu/menubar_guilds_up.dds' },
-        FRIENDS = { color = ZO_ColorDef:New(0.2, 1, 0.2, .9), icon = '/esoui/art/mainmenu/menubar_social_up.dds' }
+        FRIENDS = { color = ZO_ColorDef:New(0.2, 1, 0.2, .9), icon = '/esoui/art/mainmenu/menubar_social_up.dds' },
+        BLACKLIST = { color = ZO_ColorDef:New(1, 0.2, 0.2, .9),  icon = 'esoui/art/guildfinder/keyboard/guildrecruitment_blacklist_up.dds' }
     }
 
 }
 
 -- Local references to important objects
-local TYPE_IGNORED, TYPE_MUTED, TYPE_FRIENDS, TYPE_GUILD = 1,2,3,4
+local TYPE_IGNORED, TYPE_MUTED, TYPE_FRIENDS, TYPE_GUILD, TYPE_BLACKLIST = 1,2,3,4,5
 local SOCIAL_RATE_DELAY = 2000
 local TP = ToxicPlayers
 local TPStyles = TP.STYLES
@@ -38,6 +41,7 @@ local latestEvent = GetGameTimeMilliseconds()
 local latestPlayer = nil
 local editNote = nil
 local guildMates = {}
+local guildBlacklist = {}
 
 function TP.setReticleStyle(style, text, hidden)
     ZO_ReticleContainerReticle:SetColor(style.color:UnpackRGB())
@@ -76,7 +80,11 @@ function TP.OnTargetHasChanged(eventcode,invname)
         -- Display not grouped on guild mates
         elseif settings.displayOnGuild and not IsUnitGrouped('reticleover') and TP.IsUnitGuildMate('reticleover') then
             latestPlayer = { playerType = TYPE_GUILD, playerName = GetUnitDisplayName('reticleover') }
-            TP.setReticleStyle(TPStyles.GUILD, guildMates[latestPlayer.playerName], false)
+            TP.setReticleStyle(TPStyles.GUILD, guildMates[latestPlayer.playerName].guild, false)
+        -- Display on blacklisted users from a guild
+        elseif settings.displayOnGuildBlacklist and not IsUnitGrouped('reticleover') and TP.IsUnitGuildBlacklist('reticleover') then
+            latestPlayer = { playerType = TYPE_BLACKLIST, playerName = GetUnitDisplayName('reticleover') }
+            TP.setReticleStyle(TPStyles.BLACKLIST, guildBlacklist[latestPlayer.playerName].guild, false)
         -- No list, reset.
         else
             TP.setReticleStyle(TPStyles.DEFAULT, "", true)
@@ -90,6 +98,11 @@ end
 function TP.IsUnitGuildMate(unitTag) 
     playerName = GetUnitDisplayName(unitTag)
     return guildMates[playerName] ~= nil
+end
+
+function TP.IsUnitGuildBlacklist(unitTag) 
+    playerName = GetUnitDisplayName(unitTag)
+    return guildBlacklist[playerName] ~= nil
 end
 
 function TP.UpdatePlayerNote(eventcode, playerName)
@@ -121,13 +134,18 @@ function TP.getPlayerInfo()
         if latestPlayer.playerType == TYPE_FRIENDS then
             formatedNote = zo_strformat(TOXICPLAYERS_SI_FRIEND_PLAYER_INFO, link)
         elseif latestPlayer.playerType == TYPE_GUILD then
-            formatedNote = zo_strformat(TOXICPLAYERS_SI_GUILD_PLAYER_INFO, link, guildMates[latestPlayer.playerName])
+            formatedNote = zo_strformat(TOXICPLAYERS_SI_GUILD_PLAYER_INFO, link, guildMates[latestPlayer.playerName].guild)
         elseif latestPlayer.playerType == TYPE_MUTED then
             formatedNote = zo_strformat(TOXICPLAYERS_SI_MUTED_PLAYER_INFO, link)
-        else
+        elseif latestPlayer.playerType == TYPE_IGNORED then
             local playerNote = TP.GetPlayerIgnoreNote(latestPlayer.playerName)
             if playerNote then 
                 formatedNote = (playerNote == "") and zo_strformat(TOXICPLAYERS_SI_NO_IGNORE_NOTE, link) or zo_strformat(TOXICPLAYERS_SI_IGNORE_NOTE, link, playerNote)
+            end
+        elseif latestPlayer.playerType == TYPE_BLACKLIST then
+            local playerNote = TP.GetPlayerBannedNote(latestPlayer.playerName)
+            if playerNote then 
+                formatedNote = (playerNote == "") and zo_strformat(TOXICPLAYERS_SI_NO_BANNED_NOTE, link) or zo_strformat(TOXICPLAYERS_SI_BANNED_NOTE, link, playerNote)
             end
         end
         
@@ -157,6 +175,12 @@ function TP.GetPlayerIgnoreNote(playerName)
         end
     end
     return playerNote
+end
+
+function TP.GetPlayerBannedNote(playerName)
+    if guildBlacklist[playerName] ~= nil then
+      return guildBlacklist[playerName].note
+    end
 end
 
 function TP.ToggleTargetIgnore(addNote)     
@@ -229,10 +253,26 @@ function TP.initGuildMates()
         local guildName = GetGuildName(guildId)
         local numMembers = GetNumGuildMembers(guildId)
         for memberIndex = 1, numMembers do
-            local displayName, _, _, _ = GetGuildMemberInfo(guildId, memberIndex)
+            local displayName, note, _, _ = GetGuildMemberInfo(guildId, memberIndex)
             -- Keep just the first guild
             if guildMates[displayName] == nil then
-                guildMates[displayName] = guildName
+                guildMates[displayName] = { note = note, guild = guildName }
+            end
+        end
+    end
+end
+
+function TP.initGuildBlacklist()
+    guildBlacklist = {}
+    for i = 1, GetNumGuilds() do
+        local guildId = GetGuildId(i)
+        local guildName = GetGuildName(guildId)
+        local numMembers = GetNumGuildBlacklistEntries(guildId)
+        for memberIndex = 1, numMembers do
+            local displayName, note = GetGuildBlacklistInfoAt(guildId, memberIndex)
+            -- Keep just the first guild
+            if guildBlacklist[displayName] == nil then
+                guildBlacklist[displayName] = { note = note, guild = guildName }
             end
         end
     end
@@ -248,10 +288,11 @@ function TP:Initialize()
     TP.settings = ZO_SavedVars:NewCharacterIdSettings(TP.name .. "Variables", TP.defaultSettings.variableVersion, nil, TP.defaultSettings)
     TP:CreateAddonMenu()
     TP.initGuildMates()
+    TP.initGuildBlacklist()
 
     TP.setReticleStyle(TPStyles.DEFAULT, "", true)
     EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_RETICLE_TARGET_CHANGED, TP.OnTargetHasChanged)
-    
+
     -- Update when updating the lists
     EVENT_MANAGER:RegisterForEvent(TP.name .. "Note", EVENT_IGNORE_ADDED, TP.UpdatePlayerNote)
     EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_IGNORE_ADDED, TP.OnTargetHasChanged)
@@ -260,8 +301,9 @@ function TP:Initialize()
     EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_FRIEND_REMOVED, TP.OnTargetHasChanged)
     EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_RETICLE_HIDDEN_UPDATE, TP.OnReticleHidden)
     EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_GUILD_MEMBER_ADDED, TP.initGuildMates)
-    EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_GUILD_MEMBER_REMOVED, TP.initGuildMates)
-    
+    EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_GUILD_MEMBER_REMOVED, TP.initGuildMates)    
+    EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_GUILD_FINDER_BLACKLIST_RESPONSE, TP.initGuildBlacklist)
+
     EVENT_MANAGER:UnregisterForEvent(TP.name, EVENT_ADD_ON_LOADED)
 end
 
