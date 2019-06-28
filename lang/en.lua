@@ -9,6 +9,11 @@ SafeAddString(TOXICPLAYERS_FRIEND,  "Friend", 1)
 SafeAddString(TOXICPLAYERS_GUILD,   "Guild", 1)
 SafeAddString(TOXICPLAYERS_GUILD_BLACKLIST,   "Blacklisted", 1)
 
+SafeAddString(TOXICPLAYERS_POSITION_LEFT, "Left", 1)
+SafeAddString(TOXICPLAYERS_POSITION_RIGHT,   "Right", 1)
+SafeAddString(TOXICPLAYERS_POSITION_TOP,  "Top", 1)
+SafeAddString(TOXICPLAYERS_POSITION_BOTTOM,   "Bottom", 1)
+  
 SafeAddString(TOXICPLAYERS_OPTION_DESCRITPION,                 "ToxicPlayers is adding visual information to your reticle when targeting a muted or ignored player.", 1)
 SafeAddString(TOXICPLAYERS_OPTION_RETICLE_TEXT_DESCRIPTION,    "Display a status text for the targeted players", 1)
 SafeAddString(TOXICPLAYERS_OPTION_RETICLE_TEXT_TOOLTIP,        "If activated, ToxicPlayers will display the status of the targeted player (muted, ignored, guild or friends)", 1)
@@ -24,6 +29,10 @@ SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILD_DESCRIPTION,   "Activate ToxicPl
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILD_TOOLTIP,       "If deactivated, ToxicPlayers will not notify you about the guildmates you encounter", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILDBLACKLIST_DESCRIPTION,   "Activate ToxicPlayer over guild banned players", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILDBLACKLIST_TOOLTIP,       "If deactivated, ToxicPlayers will not notify you about the guild blacklisted you encounter", 1)
+SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_TEXT_DESCRIPTION,   "Position of the status text", 1)
+SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_TEXT_TOOLTIP,       "", 1)
+SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_ICON_DESCRIPTION,   "Position of the status icon", 1)
+SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_ICON_TOOLTIP,       "", 1)
 
 SafeAddString(TOXICPLAYERS_SI_FRIEND_PLAYER_INFO,      "You met your friend <<1>>", 1)
 SafeAddString(TOXICPLAYERS_SI_MUTED_PLAYER_INFO,       "You met <<1>>", 1)

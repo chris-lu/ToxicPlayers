@@ -5,6 +5,11 @@ SafeAddString(TOXICPLAYERS_FRIEND,  "Freund", 1)
 SafeAddString(TOXICPLAYERS_GUILD,   "Gilde", 1)
 SafeAddString(TOXICPLAYERS_GUILD_BLACKLIST,   "Verbannt", 1)
 
+SafeAddString(TOXICPLAYERS_POSITION_LEFT, "Links", 1)
+SafeAddString(TOXICPLAYERS_POSITION_RIGHT,   "Recht", 1)
+SafeAddString(TOXICPLAYERS_POSITION_TOP,  "Oben", 1)
+SafeAddString(TOXICPLAYERS_POSITION_BOTTOM,   "Unten", 1)
+
 SafeAddString(TOXICPLAYERS_OPTION_DESCRITPION,                 "ToxicPlayers zeigt bei deinem Fadenkreuz visuell Spieler von deiner Freundesliste, oder auch ignorierte Spieler, an.", 1)
 SafeAddString(TOXICPLAYERS_OPTION_RETICLE_TEXT_DESCRIPTION,    "Zeige Status Text am Fadenkreuz", 1)
 SafeAddString(TOXICPLAYERS_OPTION_RETICLE_TEXT_TOOLTIP,        "Ist diese Option aktiviert, dann wird ToxicPlayers wird dir den Status des anvisierten Spielers an deinem Fadenkreuz anzeigen (verstummt, ignoriert, verbannt, Gilde order Freund)", 1)
@@ -20,6 +25,10 @@ SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILD_DESCRIPTION,   "Aktiviere ToxicP
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILD_TOOLTIP,       "Ist diese Option deaktiviert, denn ToxicPlayers wird nicht aktiviert, wenn du einen verbannt Gilde Spieler triffst", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILDBLACKLIST_DESCRIPTION,   "Aktiviere ToxicPlayer über verbannt Spieler", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILDBLACKLIST_TOOLTIP,       "Ist diese Option deaktiviert, denn ToxicPlayers wird nicht aktiviert, wenn du einer verbannt Spieler von einer deine Gilden triffst", 1)
+SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_TEXT_DESCRIPTION,   "Position des Statustextes", 1)
+SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_TEXT_TOOLTIP,       "", 1)
+SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_ICON_DESCRIPTION,   "Position des Statussymbols", 1)
+SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_ICON_TOOLTIP,       "", 1)
 
 SafeAddString(TOXICPLAYERS_SI_FRIEND_PLAYER_INFO,      "Du hast deinen Freund <<1>> getroffen", 1)
 SafeAddString(TOXICPLAYERS_SI_MUTED_PLAYER_INFO,       "Du hast <<1>> getroffen", 1)

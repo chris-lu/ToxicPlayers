@@ -6,6 +6,11 @@ local strings = {
 	TOXICPLAYERS_GUILD = "Guild",
 	TOXICPLAYERS_GUILD_BLACKLIST = "Blacklisted",
 
+  TOXICPLAYERS_POSITION_LEFT = "Left",
+  TOXICPLAYERS_POSITION_RIGHT = "Right",
+  TOXICPLAYERS_POSITION_TOP = "Top",
+  TOXICPLAYERS_POSITION_BOTTOM = "Bottom",
+  
 	TOXICPLAYERS_OPTION_DESCRITPION = "ToxicPlayers is adding visual information to your reticle when targeting a muted or ignored player.",
 	TOXICPLAYERS_OPTION_RETICLE_TEXT_DESCRIPTION = "Display a status text for the targeted players",
 	TOXICPLAYERS_OPTION_RETICLE_TEXT_TOOLTIP = "If activated, ToxicPlayers will display the status of the targeted player (muted, ignored, guild, banned or friends)",
@@ -21,6 +26,10 @@ local strings = {
   TOXICPLAYERS_OPTION_DISPLAY_GUILD_TOOLTIP = "If deactivated, ToxicPlayers will not notify you about the guildmates you encounter",
   TOXICPLAYERS_OPTION_DISPLAY_GUILDBLACKLIST_DESCRIPTION = "Activate ToxicPlayer over guild banned players",
   TOXICPLAYERS_OPTION_DISPLAY_GUILDBLACKLIST_TOOLTIP = "If deactivated, ToxicPlayers will not notify you about the guild blacklisted you encounter",
+  TOXICPLAYERS_OPTION_DISPLAY_POSITION_TEXT_DESCRIPTION = "Position of the status text",
+  TOXICPLAYERS_OPTION_DISPLAY_POSITION_TEXT_TOOLTIP = "",
+  TOXICPLAYERS_OPTION_DISPLAY_POSITION_ICON_DESCRIPTION = "Position of the status icon",
+  TOXICPLAYERS_OPTION_DISPLAY_POSITION_ICON_TOOLTIP = "",
 
 	TOXICPLAYERS_SI_FRIEND_PLAYER_INFO = "You met your friend <<1>>",
 	TOXICPLAYERS_SI_MUTED_PLAYER_INFO = "You met <<1>>",

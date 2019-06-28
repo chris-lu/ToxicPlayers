@@ -73,7 +73,34 @@ function ToxicPlayers:CreateAddonMenu()
             getFunc = function() return TP.settings.displayOnIgnored end,
             setFunc = function(value) TP.settings.displayOnIgnored = value end,
             width = "full"
+        },
+        [10] = {
+            type = "dropdown",
+            name = GetString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_TEXT_DESCRIPTION),
+            tooltip = GetString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_TEXT_TOOLTIP),
+            getFunc = function() return TP.settings.positionName end,
+            setFunc = function(value) 
+              TP.settings.positionName = value
+              TP.FixPositions() 
+            end,
+            choices = { GetString(TOXICPLAYERS_POSITION_TOP), GetString(TOXICPLAYERS_POSITION_BOTTOM), GetString(TOXICPLAYERS_POSITION_LEFT), GetString(TOXICPLAYERS_POSITION_RIGHT) },
+            choicesValues = { TOP, BOTTOM, LEFT, RIGHT },
+            width = "full"
+        },
+        [11] = {
+            type = "dropdown",
+            name = GetString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_ICON_DESCRIPTION),
+            tooltip = GetString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_ICON_TOOLTIP),
+            getFunc = function() return TP.settings.positionIcon end,
+            setFunc = function(value) 
+              TP.settings.positionIcon = value
+              TP.FixPositions() 
+            end,
+            choices = { GetString(TOXICPLAYERS_POSITION_TOP), GetString(TOXICPLAYERS_POSITION_BOTTOM), GetString(TOXICPLAYERS_POSITION_LEFT), GetString(TOXICPLAYERS_POSITION_RIGHT) },
+            choicesValues = { TOP, BOTTOM, LEFT, RIGHT },
+            width = "full"
         }
+
     }
   
     LAM:RegisterOptionControls(TP.name .. "Options", optionsData)  

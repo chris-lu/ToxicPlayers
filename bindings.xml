@@ -8,7 +8,7 @@
 				<Down>ToxicPlayers.ToggleTargetIgnore(true)</Down>
 			</Action>
 			<Action name="TOXICPLAYERS_KEY_GET_NOTE">
-				<Down>ToxicPlayers.getPlayerInfo()</Down>
+				<Down>ToxicPlayers.GetPlayerInfo()</Down>
 			</Action>
 			<Action name="TOXICPLAYERS_KEY_REPORT">
 				<Down>ToxicPlayers.ReportTarget()</Down>

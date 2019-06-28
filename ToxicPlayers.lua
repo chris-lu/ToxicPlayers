@@ -6,7 +6,7 @@ ToxicPlayers = {
         type = "panel",
         name = "Toxic Players",
         author = "mouton",
-        version = "1.2"
+        version = "1.3"
     },
 
     settings = {},
@@ -18,6 +18,8 @@ ToxicPlayers = {
         displayOnGuild = true,
         displayOnGuildBlacklist = true,
         displayOnFriends = true,
+        positionName = TOP,
+        positionIcon = BOTTOM,
         variableVersion = 2
     },
     
@@ -43,23 +45,67 @@ local editNote = nil
 local guildMates = {}
 local guildBlacklist = {}
 
-function TP.setReticleStyle(style, text, hidden)
+
+function TP.FixPositions()
+    TP.SetPosition(ToxicPlayersUnitName, TP.settings.positionName)
+    TP.SetPosition(ToxicPlayersUnitIcon, TP.settings.positionIcon)
+    TP.SetReticleStyle(TPStyles.DEFAULT, "", true)
+end
+
+function TP.SetPosition(ctrl, position)
+    ctrl:ClearAnchors()
+    
+    local whereOnMe, whereOnTarget, textAlign
+    
+    if position == BOTTOM then
+        whereOnMe, whereOnTarget, textAlign = TOP, BOTTOM, TEXT_ALIGN_CENTER
+    elseif position == RIGHT then
+        whereOnMe, whereOnTarget, textAlign = LEFT, RIGHT, TEXT_ALIGN_LEFT
+    elseif position == LEFT then
+        whereOnMe, whereOnTarget, textAlign = RIGHT, LEFT, TEXT_ALIGN_RIGHT
+    else
+      -- Default position for TOP
+        whereOnMe, whereOnTarget, textAlign = BOTTOM, TOP, TEXT_ALIGN_CENTER
+    end
+    
+    ctrl:SetAnchor(whereOnMe, ctrl:GetParent(), whereOnTarget, 0, 0)
+    if ctrl['SetHorizontalAlignment'] ~= nil then
+        ctrl:SetHorizontalAlignment(textAlign)
+    end
+end
+
+function TP.SetReticleStyle(style, text, hidden)
     ZO_ReticleContainerReticle:SetColor(style.color:UnpackRGB())
     local settings = TP.settings
-    if settings.displayText then
-        ToxicPlayersUnitName:SetColor(style.color:UnpackRGBA())
-        ToxicPlayersUnitName:SetText(text)
-        ToxicPlayersUnitName:SetHidden(hidden)
-    end
     if settings.displayIcon then
         ToxicPlayersUnitIcon:SetColor(style.color:UnpackRGBA())
         ToxicPlayersUnitIcon:SetTexture(style.icon)
         ToxicPlayersUnitIcon:SetHidden(hidden)
     end
+    if settings.displayText then
+        ToxicPlayersUnitName:SetColor(style.color:UnpackRGBA())
+        ToxicPlayersUnitName:SetText(text)
+        ToxicPlayersUnitName:SetHidden(hidden)
+        if settings.positionName == settings.positionIcon then
+            -- Same position, right or left
+            if settings.positionName == RIGHT or settings.positionName == LEFT then
+                ToxicPlayersUnitName:SetHeight(90)
+                ToxicPlayersUnitName:SetVerticalAlignment(TEXT_ALIGN_BOTTOM)
+            -- Same position, top or bottom
+            else 
+                ToxicPlayersUnitName:SetHeight(120)
+                ToxicPlayersUnitName:SetVerticalAlignment(TEXT_ALIGN_CENTER)
+            end
+        else
+            -- Any other position
+            ToxicPlayersUnitName:SetHeight(40)
+            ToxicPlayersUnitName:SetVerticalAlignment(TEXT_ALIGN_CENTER)
+        end
+    end
 end
 
 function TP.OnReticleHidden(eventcode)
-    TP.setReticleStyle(TPStyles.DEFAULT, "", true)
+    TP.SetReticleStyle(TPStyles.DEFAULT, "", true)
 end
 
 function TP.OnTargetHasChanged(eventcode,invname)
@@ -68,30 +114,30 @@ function TP.OnTargetHasChanged(eventcode,invname)
         -- Check player ignore list
         if settings.displayOnIgnored and IsUnitIgnored('reticleover') then
             latestPlayer = { playerType = TYPE_IGNORED, playerName = GetUnitDisplayName('reticleover') }
-            TP.setReticleStyle(TPStyles.IGNORED, GetString(TOXICPLAYERS_IGNORED), false)
+            TP.SetReticleStyle(TPStyles.IGNORED, GetString(TOXICPLAYERS_IGNORED), false)
         -- If MuteList addon is installed, check muted
         elseif MuteList and MuteList.settings and settings.displayOnMuted and MuteList.settings.IsMuted(GetUnitDisplayName('reticleover')) then
             latestPlayer = { playerType = TYPE_MUTED, playerName = GetUnitDisplayName('reticleover') }
-            TP.setReticleStyle(TPStyles.MUTED, GetString(TOXICPLAYERS_MUTED), false)
+            TP.SetReticleStyle(TPStyles.MUTED, GetString(TOXICPLAYERS_MUTED), false)
         -- Display not grouped friends as well
         elseif settings.displayOnFriends and not IsUnitGrouped('reticleover') and IsUnitFriend('reticleover') then
             latestPlayer = { playerType = TYPE_FRIENDS, playerName = GetUnitDisplayName('reticleover') }
-            TP.setReticleStyle(TPStyles.FRIENDS, GetString(TOXICPLAYERS_FRIEND), false)
+            TP.SetReticleStyle(TPStyles.FRIENDS, GetString(TOXICPLAYERS_FRIEND), false)
         -- Display not grouped on guild mates
         elseif settings.displayOnGuild and not IsUnitGrouped('reticleover') and TP.IsUnitGuildMate('reticleover') then
             latestPlayer = { playerType = TYPE_GUILD, playerName = GetUnitDisplayName('reticleover') }
-            TP.setReticleStyle(TPStyles.GUILD, guildMates[latestPlayer.playerName].guild, false)
+            TP.SetReticleStyle(TPStyles.GUILD, guildMates[latestPlayer.playerName].guild, false)
         -- Display on blacklisted users from a guild
         elseif settings.displayOnGuildBlacklist and not IsUnitGrouped('reticleover') and TP.IsUnitGuildBlacklist('reticleover') then
             latestPlayer = { playerType = TYPE_BLACKLIST, playerName = GetUnitDisplayName('reticleover') }
-            TP.setReticleStyle(TPStyles.BLACKLIST, guildBlacklist[latestPlayer.playerName].guild, false)
+            TP.SetReticleStyle(TPStyles.BLACKLIST, guildBlacklist[latestPlayer.playerName].guild, false)
         -- No list, reset.
         else
-            TP.setReticleStyle(TPStyles.DEFAULT, "", true)
+            TP.SetReticleStyle(TPStyles.DEFAULT, "", true)
         end
     -- No target, reset.
     else
-        TP.setReticleStyle(TPStyles.DEFAULT, "", true)
+        TP.SetReticleStyle(TPStyles.DEFAULT, "", true)
     end
 end
 
@@ -126,8 +172,8 @@ function TP.UpdatePlayerNote(eventcode, playerName)
     latestEvent = GetGameTimeMilliseconds()
 end
 
-function TP.getPlayerInfo()
-    if TP.isSocialAllowed() and latestPlayer then
+function TP.GetPlayerInfo()
+    if TP.IsSocialAllowed() and latestPlayer then
         local formatedNote = nil
         local link = ZO_LinkHandler_CreateDisplayNameLink(latestPlayer.playerName)
         
@@ -184,7 +230,7 @@ function TP.GetPlayerBannedNote(playerName)
 end
 
 function TP.ToggleTargetIgnore(addNote)     
-    if TP.canUseIgnore() then
+    if TP.CanUseIgnore() then
         local playerName = GetUnitDisplayName('reticleover')
     
         if IsUnitIgnored('reticleover') then
@@ -217,7 +263,7 @@ end
 
 function TP.ReportTarget()
     -- Adding player to ignore as Zenimax is doing to avoid abuses. Do not report players already ignored.
-    if TP.canUseIgnore() and not IsUnitIgnored('reticleover') then        
+    if TP.CanUseIgnore() and not IsUnitIgnored('reticleover') then        
         local playerName = GetUnitDisplayName('reticleover')
         
         local function IgnoreSelectedPlayer()
@@ -229,7 +275,7 @@ function TP.ReportTarget()
     end
 end
 
-function TP.isSocialAllowed()
+function TP.IsSocialAllowed()
     if GetGameTimeMilliseconds() - latestEvent < SOCIAL_RATE_DELAY then
         -- Still in social cooldown
         -- ZO_Alert(UI_ALERT_CATEGORY_ERROR, SOUNDS.NEGATIVE_CLICK, GetString(SI_SOCIAL_REQUEST_ON_COOLDOWN))
@@ -240,13 +286,13 @@ function TP.isSocialAllowed()
     return true
 end
 
-function TP.canUseIgnore()
+function TP.CanUseIgnore()
     -- No, no no. Do not report friends, group members or already blocked members.
     -- Add timer so we're not spamming
-    return  TP.isSocialAllowed() and IsUnitPlayer('reticleover') and not IsUnitFriend('reticleover') and not IsUnitGrouped('reticleover')
+    return  TP.IsSocialAllowed() and IsUnitPlayer('reticleover') and not IsUnitFriend('reticleover') and not IsUnitGrouped('reticleover')
 end
 
-function TP.initGuildMates()
+function TP.InitGuildMates()
     guildMates = {}
     for i = 1, GetNumGuilds() do
         local guildId = GetGuildId(i)
@@ -262,7 +308,7 @@ function TP.initGuildMates()
     end
 end
 
-function TP.initGuildBlacklist()
+function TP.InitGuildBlacklist()
     guildBlacklist = {}
     for i = 1, GetNumGuilds() do
         local guildId = GetGuildId(i)
@@ -286,11 +332,14 @@ end
 
 function TP:Initialize()
     TP.settings = ZO_SavedVars:NewCharacterIdSettings(TP.name .. "Variables", TP.defaultSettings.variableVersion, nil, TP.defaultSettings)
+    
+    -- Initial UI and variables
     TP:CreateAddonMenu()
-    TP.initGuildMates()
-    TP.initGuildBlacklist()
+    TP.InitGuildMates()
+    TP.InitGuildBlacklist()
+    TP.FixPositions()
+    TP.SetReticleStyle(TPStyles.DEFAULT, "", true)
 
-    TP.setReticleStyle(TPStyles.DEFAULT, "", true)
     EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_RETICLE_TARGET_CHANGED, TP.OnTargetHasChanged)
 
     -- Update when updating the lists
@@ -300,9 +349,9 @@ function TP:Initialize()
     EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_FRIEND_ADDED, TP.OnTargetHasChanged)
     EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_FRIEND_REMOVED, TP.OnTargetHasChanged)
     EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_RETICLE_HIDDEN_UPDATE, TP.OnReticleHidden)
-    EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_GUILD_MEMBER_ADDED, TP.initGuildMates)
-    EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_GUILD_MEMBER_REMOVED, TP.initGuildMates)    
-    EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_GUILD_FINDER_BLACKLIST_RESPONSE, TP.initGuildBlacklist)
+    EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_GUILD_MEMBER_ADDED, TP.InitGuildMates)
+    EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_GUILD_MEMBER_REMOVED, TP.InitGuildMates)    
+    EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_GUILD_FINDER_BLACKLIST_RESPONSE, TP.InitGuildBlacklist)
 
     EVENT_MANAGER:UnregisterForEvent(TP.name, EVENT_ADD_ON_LOADED)
 end

@@ -4,7 +4,12 @@ SafeAddString(TOXICPLAYERS_MUTED,   "Muet", 1)
 SafeAddString(TOXICPLAYERS_FRIEND,  "Ami", 1)
 SafeAddString(TOXICPLAYERS_GUILD,   "Guilde", 1)
 SafeAddString(TOXICPLAYERS_GUILD_BLACKLIST,   "Banni", 1)
-  
+
+SafeAddString(TOXICPLAYERS_POSITION_LEFT, "Gauche", 1)
+SafeAddString(TOXICPLAYERS_POSITION_RIGHT,   "Droite", 1)
+SafeAddString(TOXICPLAYERS_POSITION_TOP,  "Haut", 1)
+SafeAddString(TOXICPLAYERS_POSITION_BOTTOM,   "Bas", 1)
+
 SafeAddString(TOXICPLAYERS_OPTION_DESCRITPION,                 "ToxicPlayers ajoute des informations visuelles au niveau de votre réticule de visée quand des joueurs ignorés, muets ou amis sont ciblés", 1)
 SafeAddString(TOXICPLAYERS_OPTION_RETICLE_TEXT_DESCRIPTION,    "Afficher le statut du joueur ciblé", 1)
 SafeAddString(TOXICPLAYERS_OPTION_RETICLE_TEXT_TOOLTIP,        "Si sélectionné, ToxicPlayers affichera le statut de ce joueur lorsqu'il sera ciblé (ignoré, muet, guilde, banni ou ami)", 1)
@@ -20,6 +25,11 @@ SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILD_DESCRIPTION,   "Activer ToxicPla
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILD_TOOLTIP,       "Si désélectionné, ToxicPlayers ne s'activera pas quand vous rencontrerez un joueur de vos guildes", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILDBLACKLIST_DESCRIPTION,   "Activer ToxicPlayer sur les bannis de vos guildes", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILDBLACKLIST_TOOLTIP,       "Si désélectionné, ToxicPlayers ne s'activera pas quand vous rencontrerez un joueur banni de vos guildes", 1)
+SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_TEXT_DESCRIPTION,   "Position du statut du joueur", 1)
+SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_TEXT_TOOLTIP,       "", 1)
+SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_ICON_DESCRIPTION,   "Position de l'icone de statut du joueur", 1)
+SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_ICON_TOOLTIP,       "", 1)
+
 
 SafeAddString(TOXICPLAYERS_SI_FRIEND_PLAYER_INFO,      "Vous avez rencontré votre ami <<1>>", 1)
 SafeAddString(TOXICPLAYERS_SI_MUTED_PLAYER_INFO,       "Vous avez rencontré <<1>>", 1)
