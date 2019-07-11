@@ -1,3 +1,4 @@
+TP_DISPLAY_NAME_ID, TP_DISPLAY_NAME_CHARACTER, TP_DISPLAY_NAME_BOTH = 1,2,3
 
 ToxicPlayers = {
     name = "ToxicPlayers",
@@ -6,7 +7,7 @@ ToxicPlayers = {
         type = "panel",
         name = "Toxic Players",
         author = "mouton",
-        version = "1.3"
+        version = "1.4"
     },
 
     settings = {},
@@ -18,6 +19,8 @@ ToxicPlayers = {
         displayOnGuild = true,
         displayOnGuildBlacklist = true,
         displayOnFriends = true,
+        displayOnUnknown = false,
+        displayName = TP_DISPLAY_NAME_ID,
         positionName = TOP,
         positionIcon = BOTTOM,
         variableVersion = 2
@@ -35,7 +38,7 @@ ToxicPlayers = {
 }
 
 -- Local references to important objects
-local TYPE_IGNORED, TYPE_MUTED, TYPE_FRIENDS, TYPE_GUILD, TYPE_BLACKLIST = 1,2,3,4,5
+local TYPE_UNKNOWN, TYPE_IGNORED, TYPE_MUTED, TYPE_FRIENDS, TYPE_GUILD, TYPE_BLACKLIST = 1,2,3,4,5,6
 local SOCIAL_RATE_DELAY = 2000
 local TP = ToxicPlayers
 local TPStyles = TP.STYLES
@@ -113,31 +116,46 @@ function TP.OnTargetHasChanged(eventcode,invname)
         local settings = TP.settings
         -- Check player ignore list
         if settings.displayOnIgnored and IsUnitIgnored('reticleover') then
-            latestPlayer = { playerType = TYPE_IGNORED, playerName = GetUnitDisplayName('reticleover') }
+            latestPlayer = TP.GetLastestPlayer(TYPE_IGNORED)
             TP.SetReticleStyle(TPStyles.IGNORED, GetString(TOXICPLAYERS_IGNORED), false)
         -- If MuteList addon is installed, check muted
         elseif MuteList and MuteList.settings and settings.displayOnMuted and MuteList.settings.IsMuted(GetUnitDisplayName('reticleover')) then
-            latestPlayer = { playerType = TYPE_MUTED, playerName = GetUnitDisplayName('reticleover') }
+            latestPlayer = TP.GetLastestPlayer(TYPE_MUTED)
             TP.SetReticleStyle(TPStyles.MUTED, GetString(TOXICPLAYERS_MUTED), false)
         -- Display not grouped friends as well
         elseif settings.displayOnFriends and not IsUnitGrouped('reticleover') and IsUnitFriend('reticleover') then
-            latestPlayer = { playerType = TYPE_FRIENDS, playerName = GetUnitDisplayName('reticleover') }
+            latestPlayer = TP.GetLastestPlayer(TYPE_FRIENDS)
             TP.SetReticleStyle(TPStyles.FRIENDS, GetString(TOXICPLAYERS_FRIEND), false)
         -- Display not grouped on guild mates
         elseif settings.displayOnGuild and not IsUnitGrouped('reticleover') and TP.IsUnitGuildMate('reticleover') then
-            latestPlayer = { playerType = TYPE_GUILD, playerName = GetUnitDisplayName('reticleover') }
+            latestPlayer = TP.GetLastestPlayer(TYPE_GUILD)
             TP.SetReticleStyle(TPStyles.GUILD, guildMates[latestPlayer.playerName].guild, false)
         -- Display on blacklisted users from a guild
         elseif settings.displayOnGuildBlacklist and not IsUnitGrouped('reticleover') and TP.IsUnitGuildBlacklist('reticleover') then
-            latestPlayer = { playerType = TYPE_BLACKLIST, playerName = GetUnitDisplayName('reticleover') }
+            latestPlayer = TP.GetLastestPlayer(TYPE_BLACKLIST)
             TP.SetReticleStyle(TPStyles.BLACKLIST, guildBlacklist[latestPlayer.playerName].guild, false)
+        -- No list, but save info
+        elseif settings.displayOnUnknown then
+            latestPlayer = TP.GetLastestPlayer(TYPE_UNKNOWN)
+            TP.SetReticleStyle(TPStyles.DEFAULT, "", true)
         -- No list, reset.
-        else
+        else 
             TP.SetReticleStyle(TPStyles.DEFAULT, "", true)
         end
     -- No target, reset.
     else
         TP.SetReticleStyle(TPStyles.DEFAULT, "", true)
+    end
+end
+
+function TP.GetLastestPlayer(type) 
+    local settings = TP.settings
+    if settings.displayName == TP_DISPLAY_NAME_ID then 
+        return { playerType = type, playerName = GetUnitDisplayName('reticleover') }
+    elseif settings.displayName == TP_DISPLAY_NAME_CHARACTER then 
+        return { playerType = type, characterName = GetUnitName('reticleover') }
+    else 
+        return { playerType = type, playerName = GetUnitDisplayName('reticleover'), characterName = GetUnitName('reticleover') }
     end
 end
 
@@ -175,24 +193,32 @@ end
 function TP.GetPlayerInfo()
     if TP.IsSocialAllowed() and latestPlayer then
         local formatedNote = nil
-        local link = ZO_LinkHandler_CreateDisplayNameLink(latestPlayer.playerName)
+        local playerLink = ""
+        local characterLink = ""
         
-        if latestPlayer.playerType == TYPE_FRIENDS then
-            formatedNote = zo_strformat(TOXICPLAYERS_SI_FRIEND_PLAYER_INFO, link)
+        if latestPlayer.playerName then 
+            playerLink = ZO_LinkHandler_CreateDisplayNameLink(latestPlayer.playerName)
+            if latestPlayer.characterName then
+                characterLink = zo_strformat(TOXICPLAYERS_SI_WITH_CHAR, ZO_LinkHandler_CreateCharacterLink(latestPlayer.characterName) )
+            end
+        elseif latestPlayer.characterName then
+            playerLink = ZO_LinkHandler_CreateCharacterLink(latestPlayer.characterName) 
+        end 
+
+        if latestPlayer.playerType == TYPE_UNKNOWN then
+            formatedNote = zo_strformat(TOXICPLAYERS_SI_UNKNOWN_PLAYER_INFO, playerLink, characterLink)
+        elseif latestPlayer.playerType == TYPE_FRIENDS then
+            formatedNote = zo_strformat(TOXICPLAYERS_SI_FRIEND_PLAYER_INFO, playerLink, characterLink)
         elseif latestPlayer.playerType == TYPE_GUILD then
-            formatedNote = zo_strformat(TOXICPLAYERS_SI_GUILD_PLAYER_INFO, link, guildMates[latestPlayer.playerName].guild)
+            formatedNote = zo_strformat(TOXICPLAYERS_SI_GUILD_PLAYER_INFO, playerLink, characterLink, guildMates[latestPlayer.playerName].guild)
         elseif latestPlayer.playerType == TYPE_MUTED then
-            formatedNote = zo_strformat(TOXICPLAYERS_SI_MUTED_PLAYER_INFO, link)
+            formatedNote = zo_strformat(TOXICPLAYERS_SI_MUTED_PLAYER_INFO, playerLink, characterLink)
         elseif latestPlayer.playerType == TYPE_IGNORED then
             local playerNote = TP.GetPlayerIgnoreNote(latestPlayer.playerName)
-            if playerNote then 
-                formatedNote = (playerNote == "") and zo_strformat(TOXICPLAYERS_SI_NO_IGNORE_NOTE, link) or zo_strformat(TOXICPLAYERS_SI_IGNORE_NOTE, link, playerNote)
-            end
+            formatedNote = (playerNote == nil or playerNote == "") and zo_strformat(TOXICPLAYERS_SI_NO_IGNORE_NOTE, playerLink, characterLink) or zo_strformat(TOXICPLAYERS_SI_IGNORE_NOTE, playerLink, characterLink, playerNote)
         elseif latestPlayer.playerType == TYPE_BLACKLIST then
             local playerNote = TP.GetPlayerBannedNote(latestPlayer.playerName)
-            if playerNote then 
-                formatedNote = (playerNote == "") and zo_strformat(TOXICPLAYERS_SI_NO_BANNED_NOTE, link) or zo_strformat(TOXICPLAYERS_SI_BANNED_NOTE, link, playerNote)
-            end
+            formatedNote = (playerNote == nil or playerNote == "") and zo_strformat(TOXICPLAYERS_SI_NO_BANNED_NOTE, playerLink, characterLink) or zo_strformat(TOXICPLAYERS_SI_BANNED_NOTE, playerLink, characterLink, playerNote)
         end
         
         if formatedNote then

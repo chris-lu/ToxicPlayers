@@ -75,6 +75,24 @@ function ToxicPlayers:CreateAddonMenu()
             width = "full"
         },
         [10] = {
+            type = "checkbox",
+            name = GetString(TOXICPLAYERS_OPTION_DISPLAY_UNKNOWN_DESCRIPTION),
+            tooltip = GetString(TOXICPLAYERS_OPTION_DISPLAY_UNKNOWN_TOOLTIP),
+            getFunc = function() return TP.settings.displayOnUnknown end,
+            setFunc = function(value) TP.settings.displayOnUnknown = value end,
+            width = "full"
+        },
+        [11] = {
+            type = "dropdown",
+            name = GetString(TOXICPLAYERS_OPTION_DISPLAY_NAME),
+            tooltip = GetString(TOXICPLAYERS_OPTION_DISPLAY_NAME_TOOLTIP),
+            getFunc = function() return TP.settings.displayName end,
+            setFunc = function(value) TP.settings.displayName = value end,
+            choices = { GetString(TOXICPLAYERS_SI_DISPLAY_NAME_ID), GetString(TOXICPLAYERS_SI_DISPLAY_BOTH) },
+            choicesValues = { TP_DISPLAY_NAME_ID, TP_DISPLAY_NAME_BOTH },
+            width = "full"
+        },
+        [12] = {
             type = "dropdown",
             name = GetString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_TEXT_DESCRIPTION),
             tooltip = GetString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_TEXT_TOOLTIP),
@@ -87,7 +105,7 @@ function ToxicPlayers:CreateAddonMenu()
             choicesValues = { TOP, BOTTOM, LEFT, RIGHT },
             width = "full"
         },
-        [11] = {
+        [13] = {
             type = "dropdown",
             name = GetString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_ICON_DESCRIPTION),
             tooltip = GetString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_ICON_TOOLTIP),
