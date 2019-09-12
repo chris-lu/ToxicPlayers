@@ -7,7 +7,7 @@ ToxicPlayers = {
         type = "panel",
         name = "Toxic Players",
         author = "mouton",
-        version = "1.4"
+        version = "1.4.1"
     },
 
     settings = {},
@@ -129,11 +129,11 @@ function TP.OnTargetHasChanged(eventcode,invname)
         -- Display not grouped on guild mates
         elseif settings.displayOnGuild and not IsUnitGrouped('reticleover') and TP.IsUnitGuildMate('reticleover') then
             latestPlayer = TP.GetLastestPlayer(TYPE_GUILD)
-            TP.SetReticleStyle(TPStyles.GUILD, guildMates[latestPlayer.playerName].guild, false)
+            TP.SetReticleStyle(TPStyles.GUILD, guildMates[latestPlayer.playerName].guildName, false)
         -- Display on blacklisted users from a guild
         elseif settings.displayOnGuildBlacklist and not IsUnitGrouped('reticleover') and TP.IsUnitGuildBlacklist('reticleover') then
             latestPlayer = TP.GetLastestPlayer(TYPE_BLACKLIST)
-            TP.SetReticleStyle(TPStyles.BLACKLIST, guildBlacklist[latestPlayer.playerName].guild, false)
+            TP.SetReticleStyle(TPStyles.BLACKLIST, guildBlacklist[latestPlayer.playerName].guildName, false)
         -- No list, but save info
         elseif settings.displayOnUnknown then
             latestPlayer = TP.GetLastestPlayer(TYPE_UNKNOWN)
@@ -210,7 +210,7 @@ function TP.GetPlayerInfo()
         elseif latestPlayer.playerType == TYPE_FRIENDS then
             formatedNote = zo_strformat(TOXICPLAYERS_SI_FRIEND_PLAYER_INFO, playerLink, characterLink)
         elseif latestPlayer.playerType == TYPE_GUILD then
-            formatedNote = zo_strformat(TOXICPLAYERS_SI_GUILD_PLAYER_INFO, playerLink, characterLink, guildMates[latestPlayer.playerName].guild)
+            formatedNote = zo_strformat(TOXICPLAYERS_SI_GUILD_PLAYER_INFO, playerLink, characterLink, GetGuildRecruitmentLink(guildMates[latestPlayer.playerName].guildId, LINK_STYLE_DEFAULT))
         elseif latestPlayer.playerType == TYPE_MUTED then
             formatedNote = zo_strformat(TOXICPLAYERS_SI_MUTED_PLAYER_INFO, playerLink, characterLink)
         elseif latestPlayer.playerType == TYPE_IGNORED then
@@ -328,7 +328,7 @@ function TP.InitGuildMates()
             local displayName, note, _, _ = GetGuildMemberInfo(guildId, memberIndex)
             -- Keep just the first guild
             if guildMates[displayName] == nil then
-                guildMates[displayName] = { note = note, guild = guildName }
+                guildMates[displayName] = { note = note, guildName = guildName, guildId = guildId }
             end
         end
     end
@@ -344,7 +344,7 @@ function TP.InitGuildBlacklist()
             local displayName, note = GetGuildBlacklistInfoAt(guildId, memberIndex)
             -- Keep just the first guild
             if guildBlacklist[displayName] == nil then
-                guildBlacklist[displayName] = { note = note, guild = guildName }
+                guildBlacklist[displayName] = { note = note, guildName = guildName, guildId = guildId}
             end
         end
     end

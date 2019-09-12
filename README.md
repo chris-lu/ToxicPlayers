@@ -5,7 +5,7 @@ You can as well easily add target players to your ignore list (ideal for PvP T-b
 
 Ignored players will be red marked, muted players (if you're using MuteList addon) will be orange displayed, friends players will be marked as green and guild mates (deactivated by default) will be shown in blue.
 
-Now, you'll always remember your ennemies.
+Now, you'll always remember your enemies.
 
 --------------------------------------------------------------------------------------------------
 Features
