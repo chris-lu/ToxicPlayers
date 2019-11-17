@@ -1,7 +1,7 @@
 ## Title: ToxicPlayers
 ## Author: @mouton
-## APIVersion: 100028
-## Version: 1.4.2
+## APIVersion: 100029
+## Version: 1.5
 ## OptionalDependsOn: LibAddonMenu-2.0
 ## SavedVariables: ToxicPlayersVariables
 

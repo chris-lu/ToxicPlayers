@@ -38,6 +38,8 @@ local strings = {
   TOXICPLAYERS_OPTION_DISPLAY_POSITION_TEXT_TOOLTIP = "",
   TOXICPLAYERS_OPTION_DISPLAY_POSITION_ICON_DESCRIPTION = "Position of the status icon",
   TOXICPLAYERS_OPTION_DISPLAY_POSITION_ICON_TOOLTIP = "",
+  TOXICPLAYERS_OPTION_ACCOUNT_WIDE = "Use Account Wide Profile",
+  TOXICPLAYERS_OPTION_ACCOUNT_WIDE_TOOLTIP = "Switching between local and global profiles will reload the interface.",
 
   TOXICPLAYERS_SI_UNKNOWN_PLAYER_INFO = "You met <<1>><<2>>",
   TOXICPLAYERS_SI_FRIEND_PLAYER_INFO = "You met your friend <<1>><<2>>",

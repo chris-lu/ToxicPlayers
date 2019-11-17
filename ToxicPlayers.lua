@@ -7,11 +7,13 @@ ToxicPlayers = {
         type = "panel",
         name = "Toxic Players",
         author = "mouton",
-        version = "1.4.2"
+        version = "1.5"
     },
 
-    settings = {},
+    localSettings = {},
+    accountSettings = {},
     defaultSettings = {
+        useAccountWide = false,
         displayText = false, 
         displayIcon = true ,
         displayOnIgnored = true, 
@@ -50,8 +52,9 @@ local guildBlacklist = {}
 
 
 function TP.FixPositions()
-    TP.SetPosition(ToxicPlayersUnitName, TP.settings.positionName)
-    TP.SetPosition(ToxicPlayersUnitIcon, TP.settings.positionIcon)
+    local settings = TP.getSettings()
+    TP.SetPosition(ToxicPlayersUnitName, settings.positionName)
+    TP.SetPosition(ToxicPlayersUnitIcon, settings.positionIcon)
     TP.SetReticleStyle(TPStyles.DEFAULT, "", true)
 end
 
@@ -79,7 +82,7 @@ end
 
 function TP.SetReticleStyle(style, text, hidden)
     ZO_ReticleContainerReticle:SetColor(style.color:UnpackRGB())
-    local settings = TP.settings
+    local settings = TP.getSettings()
     if settings.displayIcon then
         ToxicPlayersUnitIcon:SetColor(style.color:UnpackRGBA())
         ToxicPlayersUnitIcon:SetTexture(style.icon)
@@ -113,7 +116,7 @@ end
 
 function TP.OnTargetHasChanged(eventcode,invname)
     if IsUnitPlayer('reticleover') then
-        local settings = TP.settings
+        local settings = TP.getSettings()
         -- Check player ignore list
         if settings.displayOnIgnored and IsUnitIgnored('reticleover') then
             latestPlayer = TP.GetLastestPlayer(TYPE_IGNORED)
@@ -149,7 +152,7 @@ function TP.OnTargetHasChanged(eventcode,invname)
 end
 
 function TP.GetLastestPlayer(type) 
-    local settings = TP.settings
+    local settings = TP.getSettings()
     if settings.displayName == TP_DISPLAY_NAME_ID then 
         return { playerType = type, playerName = GetUnitDisplayName('reticleover') }
     elseif settings.displayName == TP_DISPLAY_NAME_CHARACTER then 
@@ -357,7 +360,9 @@ function TP.OnAddOnLoaded(event, addonName)
 end
 
 function TP:Initialize()
-    TP.settings = ZO_SavedVars:NewCharacterIdSettings(TP.name .. "Variables", TP.defaultSettings.variableVersion, nil, TP.defaultSettings)
+    
+    TP.accountSettings = ZO_SavedVars:NewAccountWide(TP.name .. "Variables", TP.defaultSettings.variableVersion, nil, TP.defaultSettings)
+    TP.localSettings = ZO_SavedVars:NewCharacterIdSettings(TP.name .. "Variables", TP.defaultSettings.variableVersion, nil, TP.defaultSettings)
     
     -- Initial UI and variables
     TP:CreateAddonMenu()

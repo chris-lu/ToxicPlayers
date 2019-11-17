@@ -1,5 +1,28 @@
 local TP = ToxicPlayers
 
+ToxicPlayers.settings = {}
+local settings = {}
+
+function settings.__index(self, key) 
+  local sets = TP.getSettings()
+  return sets[key]
+end
+
+function settings.__newindex(self, key, value)
+  local sets = TP.getSettings()
+  sets[key] = value
+end
+
+setmetatable(TP.settings, settings)
+
+function TP.getSettings()
+  if(TP.accountSettings.accountWide) then
+    return TP.accountSettings
+  else
+    return TP.localSettings
+  end
+end
+
 function ToxicPlayers:CreateAddonMenu()
     local LAM = LibStub:GetLibrary("LibAddonMenu-2.0")
 
@@ -116,6 +139,26 @@ function ToxicPlayers:CreateAddonMenu()
             end,
             choices = { GetString(TOXICPLAYERS_POSITION_TOP), GetString(TOXICPLAYERS_POSITION_BOTTOM), GetString(TOXICPLAYERS_POSITION_LEFT), GetString(TOXICPLAYERS_POSITION_RIGHT) },
             choicesValues = { TOP, BOTTOM, LEFT, RIGHT },
+            width = "full"
+        },
+        [14] = {
+            type = "checkbox",
+            name = GetString(TOXICPLAYERS_OPTION_ACCOUNT_WIDE),
+            warning = GetString(TOXICPLAYERS_OPTION_ACCOUNT_WIDE_TOOLTIP),
+            getFunc = function() return TP.accountSettings.accountWide end,
+            setFunc = function(value) 
+              TP.accountSettings.accountWide, TP.localSettings.accountWide = value, value
+              if(TP.accountSettings.accountWide) then
+                for k,v in pairs(TP.defaultSettings) do
+                  TP.accountSettings[k] = TP.localSettings[k]
+                end
+              else
+                for k,v in pairs(TP.defaultSettings) do
+                  TP.localSettings[k] = TP.accountSettings[k]
+                end
+              end
+              ReloadUI()
+            end,
             width = "full"
         }
 

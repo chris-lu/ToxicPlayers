@@ -37,7 +37,9 @@ SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_TEXT_DESCRIPTION,   "Position
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_TEXT_TOOLTIP,       "", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_ICON_DESCRIPTION,   "Position de l'icône de statut du joueur", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_ICON_TOOLTIP,       "", 1)
-
+SafeAddString(TOXICPLAYERS_OPTION_ACCOUNT_WIDE,   "Utiliser un Profil Global de Compte", 1)
+SafeAddString(TOXICPLAYERS_OPTION_ACCOUNT_WIDE_TOOLTIP,       "Changer entre les profils locaux et globaux rechargera l'interface.", 1)
+  
 SafeAddString(TOXICPLAYERS_SI_UNKNOWN_PLAYER_INFO,     "Vous avez rencontré <<1>><<2>>", 1)
 SafeAddString(TOXICPLAYERS_SI_FRIEND_PLAYER_INFO,      "Vous avez rencontré votre ami <<1>><<2>>", 1)
 SafeAddString(TOXICPLAYERS_SI_MUTED_PLAYER_INFO,       "Vous avez rencontré <<1>><<2>>", 1)
