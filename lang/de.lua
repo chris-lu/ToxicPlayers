@@ -54,3 +54,4 @@ SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED,             "Hinz
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED_WITH_NOTE,   "Hinzufügen/Entfernen Spieler (Ignoriert Liste) + Notiz", 1)
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_GET_NOTE,                   "Notiz für letzten Spieler anzeigen", 1)
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_REPORT,                     "Spieler melden", 1)
+SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_WHISPER_TARGET,       		       "Flüstern an der letzter Spieler", 1)

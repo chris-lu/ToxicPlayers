@@ -7,9 +7,11 @@ ToxicPlayers = {
         type = "panel",
         name = "Toxic Players",
         author = "mouton",
-        version = "1.5"
+        version = "1.6"
     },
 
+    command =  "/toxicplayers",
+    
     localSettings = {},
     accountSettings = {},
     defaultSettings = {
@@ -45,6 +47,7 @@ local SOCIAL_RATE_DELAY = 2000
 local TP = ToxicPlayers
 local TPStyles = TP.STYLES
 local latestEvent = GetGameTimeMilliseconds()
+local latestWisp = nil
 local latestPlayer = nil
 local editNote = nil
 local guildMates = {}
@@ -119,27 +122,27 @@ function TP.OnTargetHasChanged(eventcode,invname)
         local settings = TP.getSettings()
         -- Check player ignore list
         if settings.displayOnIgnored and IsUnitIgnored('reticleover') then
-            latestPlayer = TP.GetLastestPlayer(TYPE_IGNORED)
+            TP.SetLastestPlayer(TP.GetLastestPlayer(TYPE_IGNORED))
             TP.SetReticleStyle(TPStyles.IGNORED, GetString(TOXICPLAYERS_IGNORED), false)
         -- If MuteList addon is installed, check muted
         elseif MuteList and MuteList.settings and settings.displayOnMuted and MuteList.settings.IsMuted(GetUnitDisplayName('reticleover')) then
-            latestPlayer = TP.GetLastestPlayer(TYPE_MUTED)
+            TP.SetLastestPlayer(TP.GetLastestPlayer(TYPE_MUTED))
             TP.SetReticleStyle(TPStyles.MUTED, GetString(TOXICPLAYERS_MUTED), false)
         -- Display not grouped friends as well
         elseif settings.displayOnFriends and not IsUnitGrouped('reticleover') and IsUnitFriend('reticleover') then
-            latestPlayer = TP.GetLastestPlayer(TYPE_FRIENDS)
+            TP.SetLastestPlayer(TP.GetLastestPlayer(TYPE_FRIENDS))
             TP.SetReticleStyle(TPStyles.FRIENDS, GetString(TOXICPLAYERS_FRIEND), false)
         -- Display not grouped on guild mates
         elseif settings.displayOnGuild and not IsUnitGrouped('reticleover') and TP.IsUnitGuildMate('reticleover') then
-            latestPlayer = TP.GetLastestPlayer(TYPE_GUILD)
+            TP.SetLastestPlayer(TP.GetLastestPlayer(TYPE_GUILD))
             TP.SetReticleStyle(TPStyles.GUILD, guildMates[latestPlayer.playerName].guildName, false)
         -- Display on blacklisted users from a guild
         elseif settings.displayOnGuildBlacklist and not IsUnitGrouped('reticleover') and TP.IsUnitGuildBlacklist('reticleover') then
-            latestPlayer = TP.GetLastestPlayer(TYPE_BLACKLIST)
+            TP.SetLastestPlayer(TP.GetLastestPlayer(TYPE_BLACKLIST))
             TP.SetReticleStyle(TPStyles.BLACKLIST, guildBlacklist[latestPlayer.playerName].guildName, false)
         -- No list, but save info
         elseif settings.displayOnUnknown then
-            latestPlayer = TP.GetLastestPlayer(TYPE_UNKNOWN)
+            TP.SetLastestPlayer(TP.GetLastestPlayer(TYPE_UNKNOWN))
             TP.SetReticleStyle(TPStyles.DEFAULT, "", true)
         -- No list, reset.
         else 
@@ -149,6 +152,13 @@ function TP.OnTargetHasChanged(eventcode,invname)
     else
         TP.SetReticleStyle(TPStyles.DEFAULT, "", true)
     end
+end
+
+function TP.SetLastestPlayer(player)
+  if player ~= nil then
+    latestWisp = player
+  end
+  latestPlayer = player
 end
 
 function TP.GetLastestPlayer(type) 
@@ -163,12 +173,12 @@ function TP.GetLastestPlayer(type)
 end
 
 function TP.IsUnitGuildMate(unitTag) 
-    playerName = GetUnitDisplayName(unitTag)
+    local playerName = GetUnitDisplayName(unitTag)
     return guildMates[playerName] ~= nil
 end
 
 function TP.IsUnitGuildBlacklist(unitTag) 
-    playerName = GetUnitDisplayName(unitTag)
+    local playerName = GetUnitDisplayName(unitTag)
     return guildBlacklist[playerName] ~= nil
 end
 
@@ -231,7 +241,7 @@ function TP.GetPlayerInfo()
         end
         
         -- Display info just once
-        latestPlayer = nil
+        TP.SetLastestPlayer(nil)
         latestEvent = GetGameTimeMilliseconds()
     end
 end
@@ -321,6 +331,12 @@ function TP.CanUseIgnore()
     return  TP.IsSocialAllowed() and IsUnitPlayer('reticleover') and not IsUnitFriend('reticleover') and not IsUnitGrouped('reticleover')
 end
 
+function TP.Whisper()
+  if latestWisp ~= nil then
+    StartChatInput("", CHAT_CHANNEL_WHISPER, latestWisp.playerName)
+  end
+end
+
 function TP.InitGuildMates()
     guildMates = {}
     for i = 1, GetNumGuilds() do
@@ -352,6 +368,21 @@ function TP.InitGuildBlacklist()
         end
     end
 end
+
+
+function TP.SlashCommand( commandArgs )
+  local options = { }
+  -- Split words
+  local searchResult = { string.match( commandArgs, "^((%S*)%s*)*$" ) }
+  for w in commandArgs:gmatch("%S+") do
+    options[ #options + 1 ] = string.lower( w )
+  end
+
+  -- Templates commands
+  if options[1] == "info" or options[1] == nil then TP.GetPlayerInfo() end
+  if options[1] == "whisp" or options[1] == "whisper" then TP.Whisper() end
+end
+
 
 function TP.OnAddOnLoaded(event, addonName)
   if addonName ~= TP.name then return end
@@ -385,6 +416,8 @@ function TP:Initialize()
     EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_GUILD_FINDER_BLACKLIST_RESPONSE, TP.InitGuildBlacklist)
 
     EVENT_MANAGER:UnregisterForEvent(TP.name, EVENT_ADD_ON_LOADED)
+
+    SLASH_COMMANDS[ TP.command ] = TP.SlashCommand    
 end
 
 EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_ADD_ON_LOADED, TP.OnAddOnLoaded)

@@ -54,3 +54,6 @@ SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED,             "Ajou
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED_WITH_NOTE,   "Ajouter / retirer la cible des bannis et éditer la note", 1)
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_GET_NOTE,                   "Afficher les infos du dernier joueur ciblé", 1)
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_REPORT,       		       "Signaler le joueur ciblé", 1)
+SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_REPORT,       		       "Signaler le joueur ciblé", 1)
+SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_WHISPER_TARGET,       		   "Chochoter au dernier joueur ciblé", 1)
+

@@ -58,5 +58,6 @@ SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED,             "Add/
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED_WITH_NOTE,   "Add/remove target from ignore list and edit ignore note", 1)
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_GET_NOTE,                   "Display info about the latest target", 1)
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_REPORT,                     "Report the targeted player", 1)
+SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_WHISPER_TARGET,       		       "Whisper to the latest targeted player", 1)
 
 --]]
