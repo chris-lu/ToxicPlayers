@@ -7,7 +7,7 @@ ToxicPlayers = {
         type = "panel",
         name = "Toxic Players",
         author = "mouton",
-        version = "1.6.4"
+        version = "1.6.5"
     },
 
     command =  "/toxicplayers",
