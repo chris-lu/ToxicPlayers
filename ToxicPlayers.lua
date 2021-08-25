@@ -7,7 +7,7 @@ ToxicPlayers = {
         type = "panel",
         name = "Toxic Players",
         author = "mouton",
-        version = "1.6.5"
+        version = "1.7.3"
     },
 
     command =  "/toxicplayers",
@@ -19,7 +19,7 @@ ToxicPlayers = {
         displayText = false, 
         displayIcon = true ,
         displayOnIgnored = true, 
-        displayOnMuted = true,
+        displayOnMuted = false,
         displayOnGuild = true,
         displayOnGuildBlacklist = true,
         displayOnFriends = true,
@@ -125,7 +125,7 @@ function TP.OnTargetHasChanged(eventcode,invname)
             TP.SetLastestPlayer(TP.GetLastestPlayer(TYPE_IGNORED))
             TP.SetReticleStyle(TPStyles.IGNORED, GetString(TOXICPLAYERS_IGNORED), false)
         -- If MuteList addon is installed, check muted
-        elseif MuteList and MuteList.settings and settings.displayOnMuted and MuteList.settings.IsMuted(GetUnitDisplayName('reticleover')) then
+        elseif settings.displayOnMuted and MuteList and MuteList.settings and MuteList.settings.IsMuted(GetUnitDisplayName('reticleover')) then
             TP.SetLastestPlayer(TP.GetLastestPlayer(TYPE_MUTED))
             TP.SetReticleStyle(TPStyles.MUTED, GetString(TOXICPLAYERS_MUTED), false)
         -- Display not grouped friends as well
