@@ -66,12 +66,11 @@ function ToxicPlayers:CreateAddonMenu()
         },
         [6] = {
             type = "checkbox",
-            name = GetString(TOXICPLAYERS_OPTION_DISPLAY_MUTED_DESCRIPTION),
-            tooltip = GetString(TOXICPLAYERS_OPTION_DISPLAY_MUTED_TOOLTIP),
-            getFunc = function() return TP.settings.displayOnMuted end,
-            setFunc = function(value) TP.settings.displayOnMuted = value end,
+            name = GetString(TOXICPLAYERS_OPTION_AUTOMATIC_PLAYER_INFO_DESCRIPTION),
+            tooltip = GetString(TOXICPLAYERS_OPTION_AUTOMATIC_PLAYER_INFO_TOOLTIP),
+            getFunc = function() return TP.settings.automaticPlayerInfo end,
+            setFunc = function(value) TP.settings.automaticPlayerInfo = value end,
             width = "full",
-            disabled = function() return MuteList == nil end,
         },
         [7] = {
             type = "checkbox",

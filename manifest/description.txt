@@ -1,0 +1,7 @@
+ToxicPlayer is a tiny social addon that enables you to spot ignored players more easily in the game by changing the reticle style.
+You'll then be able to focus your foes on the battle fields, not help the players ignored in your faction and even spot your friends if they're not grouped with you. 
+
+
+Ignored players will be red marked, muted players (if you're using [URL="http://www.esoui.com/downloads/info1061-MutePlayer.html"]MuteList[/URL] addon) will be orange displayed and friends players will be marked as green.
+
+Now, you'll always remember your ennemies.

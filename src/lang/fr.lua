@@ -33,6 +33,8 @@ SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILDBLACKLIST_DESCRIPTION,   "Activer
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILDBLACKLIST_TOOLTIP,       "Si désélectionné, ToxicPlayers ne s'activera pas quand vous rencontrerez un joueur banni de vos guildes", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_UNKNOWN_DESCRIPTION, "Memoriser les info du dernier joueur rencontré", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_UNKNOWN_TOOLTIP,     "Si sélectionné, ToxicPlayers enregistrera les informations du dernier joueur rencontré, même inconnu, pour les afficher avec la touche [Afficher les infos du dernier joueur ciblé]", 1)
+SafeAddString(TOXICPLAYERS_OPTION_AUTOMATIC_PLAYER_INFO_DESCRIPTION,  "Affichage auto des dernières info du joueur", 1)
+SafeAddString(TOXICPLAYERS_OPTION_AUTOMATIC_PLAYER_INFO_TOOLTIP,      "Ne requiert aucune configuration de touche", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_TEXT_DESCRIPTION,   "Position du statut du joueur", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_TEXT_TOOLTIP,       "", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_ICON_DESCRIPTION,   "Position de l'icône de statut du joueur", 1)

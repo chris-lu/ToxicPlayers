@@ -33,6 +33,8 @@ SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILDBLACKLIST_DESCRIPTION,   "Aktivie
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILDBLACKLIST_TOOLTIP,       "Ist diese Option deaktiviert, denn ToxicPlayers wird nicht aktiviert, wenn du einer verbannt Spieler von einer deine Gilden triffst", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_UNKNOWN_DESCRIPTION, "Erinnern die Informationen von der letzter Spieler getroffen", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_UNKNOWN_TOOLTIP,     "Wenn aktiviert, ToxicPlayers wird die Informationnen von der letzer Spieler getroffen sich erinern und wird es anzeigen mit der Taste [Notiz für letzten Spieler anzeigen]", 1)
+SafeAddString(TOXICPLAYERS_OPTION_AUTOMATIC_PLAYER_INFO_DESCRIPTION,  "Zeigt automatisch die zuletzt angetroffenen Spielerinformationen an", 1)
+SafeAddString(TOXICPLAYERS_OPTION_AUTOMATIC_PLAYER_INFO_TOOLTIP,      "Erfordert keine Schlüsselkonfiguration", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_TEXT_DESCRIPTION,   "Position des Statustextes", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_TEXT_TOOLTIP,       "", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_ICON_DESCRIPTION,   "Position des Statussymbols", 1)

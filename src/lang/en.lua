@@ -37,6 +37,8 @@ SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILDBLACKLIST_DESCRIPTION,   "Activat
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILDBLACKLIST_TOOLTIP,       "If deactivated, ToxicPlayers will not notify you about the guild blacklisted you encounter", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_UNKNOWN_DESCRIPTION, "Save the info of the latest player encountered", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_UNKNOWN_TOOLTIP,     "If activated, ToxicPlayers will save the information of the latest unknown encountered player to display them back with the key [Display info about the latest target]", 1)
+SafeAddString(TOXICPLAYERS_OPTION_AUTOMATIC_PLAYER_INFO_DESCRIPTION,  "Automatically show player information", 1)
+SafeAddString(TOXICPLAYERS_OPTION_AUTOMATIC_PLAYER_INFO_TOOLTIP, "Enable to display player information automatically, no binding required", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_TEXT_DESCRIPTION,   "Position of the status text", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_TEXT_TOOLTIP,       "", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_ICON_DESCRIPTION,   "Position of the status icon", 1)
