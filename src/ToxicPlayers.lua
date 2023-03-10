@@ -6,7 +6,7 @@ ToxicPlayers = {
         type = "panel",
         name = "Toxic Players",
         author = "mouton",
-        version = "1.7.7"
+        version = "1.8.0"
     },
     command = "/toxicplayers",
     localSettings = {},
@@ -14,6 +14,7 @@ ToxicPlayers = {
     defaultSettings = {
         useAccountWide = false,
         displayText = false,
+        displayMarker = true,
         displayIcon = true,
         displayOnIgnored = true,
         displayOnGuild = true,
@@ -27,12 +28,12 @@ ToxicPlayers = {
         variableVersion = 3
     },
     STYLES = {
-        DEFAULT = { color = ZO_ColorDef:New(1, 1, 1, 1), icon = '' },
-        IGNORED = { color = ZO_ColorDef:New(1, 0.2, 0.2, .9), icon = '/esoui/art/contacts/tabicon_ignored_up.dds' },
-        --      MUTED =   { color = ZO_ColorDef:New(1, 0.6, 0.2, .9), icon = '/esoui/art/contacts/tabicon_ignored_up.dds' },
-        GUILD = { color = ZO_ColorDef:New(0.6, 0.7, 1, 1), icon = '/esoui/art/mainmenu/menubar_guilds_up.dds' },
-        FRIENDS = { color = ZO_ColorDef:New(0.2, 1, 0.2, .9), icon = '/esoui/art/mainmenu/menubar_social_up.dds' },
-        BLACKLIST = { color = ZO_ColorDef:New(1, 0.2, 0.2, .9), icon = 'esoui/art/guildfinder/keyboard/guildrecruitment_blacklist_up.dds' }
+        DEFAULT = { color = ZO_ColorDef:New(1, 1, 1, 1), icon = '', marker = false },
+        IGNORED = { color = ZO_ColorDef:New(1, 0.2, 0.2, .9), icon = '/esoui/art/contacts/tabicon_ignored_up.dds', marker = TARGET_MARKER_TYPE_SEVEN },
+        --      MUTED =   { color = ZO_ColorDef:New(1, 0.6, 0.2, .9), icon = '/esoui/art/contacts/tabicon_ignored_up.dds', marker = TARGET_MARKER_TYPE_FOUR  },
+        GUILD = { color = ZO_ColorDef:New(0.6, 0.7, 1, 1), icon = '/esoui/art/mainmenu/menubar_guilds_up.dds', marker = TARGET_MARKER_TYPE_ONE },
+        FRIENDS = { color = ZO_ColorDef:New(0.2, 1, 0.2, .9), icon = '/esoui/art/mainmenu/menubar_social_up.dds', marker = TARGET_MARKER_TYPE_THREE },
+        BLACKLIST = { color = ZO_ColorDef:New(1, 0.2, 0.2, .9), icon = 'esoui/art/guildfinder/keyboard/guildrecruitment_blacklist_up.dds', marker = TARGET_MARKER_TYPE_EIGHT }
     }
 }
 
@@ -55,7 +56,7 @@ function TP.FixPositions()
     local settings = TP.getSettings()
     TP.SetPosition(ToxicPlayersUnitName, settings.positionName)
     TP.SetPosition(ToxicPlayersUnitIcon, settings.positionIcon)
-    TP.SetReticleStyle(TPStyles.DEFAULT, "", true)
+    TP.SetReticleStyle(TPStyles.DEFAULT, "", true, false)
 end
 
 function TP.SetPosition(ctrl, position)
@@ -80,14 +81,19 @@ function TP.SetPosition(ctrl, position)
     end
 end
 
-function TP.SetReticleStyle(style, text, hidden)
+function TP.SetReticleStyle(style, text, hidden, marker)
     ZO_ReticleContainerReticle:SetColor(style.color:UnpackRGB())
     local settings = TP.getSettings()
+    if settings.displayMarker and marker then
+        AssignTargetMarkerToReticleTarget(style.marker or GetUnitTargetMarkerType('reticleover'))
+    end
+
     if settings.displayIcon then
         ToxicPlayersUnitIcon:SetColor(style.color:UnpackRGBA())
         ToxicPlayersUnitIcon:SetTexture(style.icon)
         ToxicPlayersUnitIcon:SetHidden(hidden)
     end
+
     if settings.displayText then
         ToxicPlayersUnitName:SetColor(style.color:UnpackRGBA())
         ToxicPlayersUnitName:SetText(text)
@@ -117,40 +123,41 @@ end
 function TP.OnTargetHasChanged(eventcode, invname)
     if IsUnitPlayer('reticleover') then
         local settings = TP.getSettings()
-        -- Check player ignore list
+        local marker = settings.displayMarker and GetUnitTargetMarkerType('reticleover') == 0
+            -- Check player ignore list
         if settings.displayOnIgnored and IsUnitIgnored('reticleover') then
             TP.SetLastestPlayer(TP.GetLastestPlayer(TYPE_IGNORED))
-            TP.EncoutnerPlayer(TPStyles.IGNORED, GetString(TOXICPLAYERS_IGNORED), false)
+            TP.EncoutnerPlayer(TPStyles.IGNORED, GetString(TOXICPLAYERS_IGNORED), false, marker)
             -- Display not grouped friends as well
         elseif settings.displayOnFriends and not IsUnitGrouped('reticleover') and IsUnitFriend('reticleover') then
             TP.SetLastestPlayer(TP.GetLastestPlayer(TYPE_FRIENDS))
-            TP.EncoutnerPlayer(TPStyles.FRIENDS, GetString(TOXICPLAYERS_FRIEND), false)
+            TP.EncoutnerPlayer(TPStyles.FRIENDS, GetString(TOXICPLAYERS_FRIEND), false, marker)
             -- Display not grouped on guild mates
         elseif settings.displayOnGuild and not IsUnitGrouped('reticleover') and TP.IsUnitGuildMate('reticleover') then
             TP.SetLastestPlayer(TP.GetLastestPlayer(TYPE_GUILD))
-            TP.EncoutnerPlayer(TPStyles.GUILD, guildMates[latestPlayer.playerName].guildName, false)
+            TP.EncoutnerPlayer(TPStyles.GUILD, guildMates[latestPlayer.playerName].guildName, false, marker)
             -- Display on blacklisted users from a guild
         elseif settings.displayOnGuildBlacklist and not IsUnitGrouped('reticleover') and TP.IsUnitGuildBlacklist('reticleover') then
             TP.SetLastestPlayer(TP.GetLastestPlayer(TYPE_BLACKLIST))
-            TP.EncoutnerPlayer(TPStyles.BLACKLIST, guildBlacklist[latestPlayer.playerName].guildName, false)
+            TP.EncoutnerPlayer(TPStyles.BLACKLIST, guildBlacklist[latestPlayer.playerName].guildName, false, marker)
             -- No list, but save info
         elseif settings.displayOnUnknown then
             TP.SetLastestPlayer(TP.GetLastestPlayer(TYPE_UNKNOWN))
-            TP.EncoutnerPlayer(TPStyles.DEFAULT, "", true)
+            TP.EncoutnerPlayer(TPStyles.DEFAULT, "", true, false)
             -- No list, reset.
         else
-            TP.SetReticleStyle(TPStyles.DEFAULT, "", true)
+            TP.SetReticleStyle(TPStyles.DEFAULT, "", true, false)
         end
         -- No target, reset.
     else
-        TP.SetReticleStyle(TPStyles.DEFAULT, "", true)
+        TP.SetReticleStyle(TPStyles.DEFAULT, "", true, false)
     end
 end
 
-function TP.EncoutnerPlayer(style, name, hidden)
+function TP.EncoutnerPlayer(style, name, hidden, marker)
     local settings = TP.getSettings()
 
-    TP.SetReticleStyle(style, name, hidden)
+    TP.SetReticleStyle(style, name, hidden, marker)
 
     if settings.automaticPlayerInfo then
         local l = latestPlayer
@@ -289,6 +296,7 @@ function TP.ToggleTargetIgnore(addNote)
 
         if IsUnitIgnored('reticleover') then
             RemoveIgnore(playerName)
+            TP.SetReticleStyle(TPStyles.DEFAULT, "", true, true)
         else
             if addNote then
                 -- We can change note only after EVENT_IGNORE_ADDED is fired, so we save the note for now.
@@ -343,8 +351,7 @@ end
 function TP.CanUseIgnore()
     -- No, no no. Do not report friends, group members or already blocked members.
     -- Add timer so we're not spamming
-    return TP.IsSocialAllowed() and IsUnitPlayer('reticleover') and not IsUnitFriend('reticleover') and
-        not IsUnitGrouped('reticleover')
+    return TP.IsSocialAllowed() and IsUnitPlayer('reticleover') and not IsUnitFriend('reticleover') and not IsUnitGrouped('reticleover')
 end
 
 function TP.Whisper()
@@ -405,17 +412,15 @@ function TP.OnAddOnLoaded(event, addonName)
 end
 
 function TP:Initialize()
-    TP.accountSettings = ZO_SavedVars:NewAccountWide(TP.name .. "Variables", TP.defaultSettings.variableVersion, nil,
-        TP.defaultSettings)
-    TP.localSettings = ZO_SavedVars:NewCharacterIdSettings(TP.name .. "Variables", TP.defaultSettings.variableVersion,
-        nil, TP.defaultSettings)
+    TP.accountSettings = ZO_SavedVars:NewAccountWide(TP.name .. "Variables", TP.defaultSettings.variableVersion, nil, TP.defaultSettings)
+    TP.localSettings = ZO_SavedVars:NewCharacterIdSettings(TP.name .. "Variables", TP.defaultSettings.variableVersion, nil, TP.defaultSettings)
 
     -- Initial UI and variables
     TP:CreateAddonMenu()
     TP.InitGuildMates()
     TP.InitGuildBlacklist()
     TP.FixPositions()
-    TP.SetReticleStyle(TPStyles.DEFAULT, "", true)
+    TP.SetReticleStyle(TPStyles.DEFAULT, "", true, false)
 
     EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_RETICLE_TARGET_CHANGED, TP.OnTargetHasChanged)
 

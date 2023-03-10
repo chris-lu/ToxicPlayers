@@ -21,6 +21,8 @@ SafeAddString(TOXICPLAYERS_OPTION_RETICLE_TEXT_DESCRIPTION,    "Zeige Status Tex
 SafeAddString(TOXICPLAYERS_OPTION_RETICLE_TEXT_TOOLTIP,        "Ist diese Option aktiviert, dann wird ToxicPlayers wird dir den Status des anvisierten Spielers an deinem Fadenkreuz anzeigen (verstummt, ignoriert, verbannt, Gilde oder Freund)", 1)
 SafeAddString(TOXICPLAYERS_OPTION_RETICLE_ICON_DESCRIPTION,    "Zeige Symbol am Fadenkreuz", 1)
 SafeAddString(TOXICPLAYERS_OPTION_RETICLE_ICON_TOOLTIP,        "Ist diese Option aktiviert, dann wird ToxicPlayers ein Symbol zum anvisierten Spieler an deinem Fadenkreuz anzeigen (verstummt, ignoriert, verbannt, Gilde oder Freund)", 1)
+SafeAddString(TOXICPLAYERS_OPTION_RETICLE_MARKER_DESCRIPTION,    "Zeige Permanente Markierung am Fadenkreuz", 1)
+SafeAddString(TOXICPLAYERS_OPTION_RETICLE_MARKER_TOOLTIP,        "Ist diese Option aktiviert, dann wird ToxicPlayers eine permanente Markierung über dem Zielspieler an (verstummt, ignoriert, verbannt, Gilde oder Freund)", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_FRIENDS_DESCRIPTION, "Aktiviere ToxicPlayer über Freunde", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_FRIENDS_TOOLTIP,     "Ist diese Option deaktiviert, denn ToxicPlayers wird nicht aktiviert, wenn du einen Freund triffst", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_MUTED_DESCRIPTION,   "Aktiviere ToxicPlayer über verstummt Spieler", 1)

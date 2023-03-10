@@ -25,6 +25,8 @@ SafeAddString(TOXICPLAYERS_OPTION_RETICLE_TEXT_DESCRIPTION,    "Display a status
 SafeAddString(TOXICPLAYERS_OPTION_RETICLE_TEXT_TOOLTIP,        "If activated, ToxicPlayers will display the status of the targeted player (muted, ignored, guild or friends)", 1)
 SafeAddString(TOXICPLAYERS_OPTION_RETICLE_ICON_DESCRIPTION,    "Display icon over the targeted players", 1)
 SafeAddString(TOXICPLAYERS_OPTION_RETICLE_ICON_TOOLTIP,        "If activated, ToxicPlayers will display an icon under the targeted player (muted, ignored, guild or friends)", 1)
+SafeAddString(TOXICPLAYERS_OPTION_RETICLE_MARKER_DESCRIPTION,    "Display a permanent marker over the targeted players", 1)
+SafeAddString(TOXICPLAYERS_OPTION_RETICLE_MARKER_TOOLTIP,        "If activated, ToxicPlayers will activate the game marker icon above the targeted player (muted, ignored, guild, banned or friends)", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_FRIENDS_DESCRIPTION, "Activate ToxicPlayer over friends", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_FRIENDS_TOOLTIP,     "If deactivated, ToxicPlayers will not notify you about the friends you encounter", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_MUTED_DESCRIPTION,   "Activate ToxicPlayer over muted players", 1)

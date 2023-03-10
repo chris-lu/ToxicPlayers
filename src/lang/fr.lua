@@ -21,6 +21,8 @@ SafeAddString(TOXICPLAYERS_OPTION_RETICLE_TEXT_DESCRIPTION,    "Afficher le stat
 SafeAddString(TOXICPLAYERS_OPTION_RETICLE_TEXT_TOOLTIP,        "Si sélectionné, ToxicPlayers affichera le statut de ce joueur lorsqu'il sera ciblé (ignoré, muet, guilde, banni ou ami)", 1)
 SafeAddString(TOXICPLAYERS_OPTION_RETICLE_ICON_DESCRIPTION,    "Afficher une icône pour le joueur ciblé", 1)
 SafeAddString(TOXICPLAYERS_OPTION_RETICLE_ICON_TOOLTIP,        "Si sélectionné, ToxicPlayers affichera une icône en dessous de la visée lorsqu'il sera ciblé (ignoré, muet, guilde, banni ou ami)", 1)
+SafeAddString(TOXICPLAYERS_OPTION_RETICLE_MARKER_DESCRIPTION,    "Afficher un marqueur permanent pour le joueur ciblé", 1)
+SafeAddString(TOXICPLAYERS_OPTION_RETICLE_MARKER_TOOLTIP,        "Si sélectionné, ToxicPlayers affichera un marqueur permanent au dessus du joueur lorsqu'il sera ciblé (ignoré, muet, guilde, banni ou ami)", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_FRIENDS_DESCRIPTION, "Activer ToxicPlayer sur les amis", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_FRIENDS_TOOLTIP,     "Si désélectionné, ToxicPlayers ne s'activera pas quand vous rencontrerez un ami", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_MUTED_DESCRIPTION,   "Activer ToxicPlayer sur les joueurs muets", 1)
