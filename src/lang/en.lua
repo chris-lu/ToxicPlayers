@@ -58,6 +58,14 @@ SafeAddString(TOXICPLAYERS_SI_NO_IGNORE_NOTE,          "No ignore note for <<1>>
 SafeAddString(TOXICPLAYERS_SI_NO_BANNED_NOTE,          "No ban note for <<1>><<2>>", 1)
 SafeAddString(TOXICPLAYERS_SI_WITH_CHAR,               " with <<1>>", 1)
 
+SafeAddString(MOUTON_AUTHOR_FEEDBACK_MAIL, "In-game mail feedback", 1)
+SafeAddString(MOUTON_AUTHOR_FEEDBACK_MAIL_HEADER, "Feedback for <<1>> (<<2>>)", 1)
+SafeAddString(MOUTON_AUTHOR_FEEDBACK_ESOUI, "ESOUI comments", 1)
+SafeAddString(MOUTON_AUTHOR_DONATE_GOLD, "Donation in gold", 1)
+SafeAddString(MOUTON_AUTHOR_DONATE_GOLD_HEADER, "Donation for <<1>>", 1)
+SafeAddString(MOUTON_AUTHOR_DONATE_ESOUI, "ESOUI donation page", 1)
+SafeAddString(MOUTON_AUTHOR_DONATE_CROWNS, "Donation in crowns", 1)
+
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED,             "Add/remove target from ignore list", 1)
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED_WITH_NOTE,   "Add/remove target from ignore list and edit ignore note", 1)
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_GET_NOTE,                   "Display info about the latest target", 1)

@@ -54,6 +54,14 @@ local strings = {
   TOXICPLAYERS_SI_NO_IGNORE_NOTE = "No ignore note for <<1>><<2>>",
   TOXICPLAYERS_SI_WITH_CHAR =" with <<1>>",
 
+  MOUTON_AUTHOR_FEEDBACK_MAIL = "In-game mail feedback",
+  MOUTON_AUTHOR_FEEDBACK_MAIL_HEADER = "Feedback for <<1>> (<<2>>)",
+  MOUTON_AUTHOR_FEEDBACK_ESOUI = "ESOUI comments",
+  MOUTON_AUTHOR_DONATE_GOLD = "Donation in gold",
+  MOUTON_AUTHOR_DONATE_GOLD_HEADER = "Donation for <<1>>",
+  MOUTON_AUTHOR_DONATE_ESOUI = "ESOUI donation page",
+  MOUTON_AUTHOR_DONATE_CROWNS = "Donation in crowns",
+
   SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED = "Add/remove target from ignore list",
   SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED_WITH_NOTE = "Add/remove target from ignore list and edit ignore note",
   SI_BINDING_NAME_TOXICPLAYERS_KEY_GET_NOTE = "Display info about the latest target",

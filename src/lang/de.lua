@@ -54,6 +54,14 @@ SafeAddString(TOXICPLAYERS_SI_NO_IGNORE_NOTE,          "Keine Notizen für den i
 SafeAddString(TOXICPLAYERS_SI_NO_BANNED_NOTE,          "Keine Notizen für den verbannt Spieler <<1>><<2>>", 1)
 SafeAddString(TOXICPLAYERS_SI_WITH_CHAR,               " mit <<1>>", 1)
 
+SafeAddString(MOUTON_AUTHOR_FEEDBACK_MAIL, "Mail-Feedback im Spiel", 1)
+SafeAddString(MOUTON_AUTHOR_FEEDBACK_MAIL_HEADER, "Feedback für <<1>> (<<2>>)", 1)
+SafeAddString(MOUTON_AUTHOR_FEEDBACK_ESOUI, "ESOUI-Kommentare", 1)
+SafeAddString(MOUTON_AUTHOR_DONATE_GOLD, "Goldspende", 1)
+SafeAddString(MOUTON_AUTHOR_DONATE_GOLD_HEADER, "Spende für <<1>>", 1)
+SafeAddString(MOUTON_AUTHOR_DONATE_ESOUI, "ESOUI-Spendenseite", 1)
+SafeAddString(MOUTON_AUTHOR_DONATE_CROWNS, "Spende in Kronen", 1)
+
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED,             "Hinzufügen/Entfernen Spieler (Ignoriert Liste)", 1)
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED_WITH_NOTE,   "Hinzufügen/Entfernen Spieler (Ignoriert Liste) + Notiz", 1)
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_GET_NOTE,                   "Notiz für letzten Spieler anzeigen", 1)

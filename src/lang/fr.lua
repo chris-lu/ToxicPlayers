@@ -54,6 +54,14 @@ SafeAddString(TOXICPLAYERS_SI_NO_IGNORE_NOTE,          "Aucune note pour le joue
 SafeAddString(TOXICPLAYERS_SI_NO_BANNED_NOTE,          "Note pour le joueur banni <<1>><<2>> : <<3>>", 1)
 SafeAddString(TOXICPLAYERS_SI_WITH_CHAR,               " avec <<1>>", 1)
 
+SafeAddString(MOUTON_AUTHOR_FEEDBACK_MAIL, "Commentaires par messagerie", 1)
+SafeAddString(MOUTON_AUTHOR_FEEDBACK_MAIL_HEADER, "Commentaires pour <<1>> (<<2>>)", 1)
+SafeAddString(MOUTON_AUTHOR_FEEDBACK_ESOUI, "Commentaires sur ESOUI", 1)
+SafeAddString(MOUTON_AUTHOR_DONATE_GOLD, "Don en pièces d'or", 1)
+SafeAddString(MOUTON_AUTHOR_DONATE_GOLD_HEADER, "Remerciement pour <<1>>", 1)
+SafeAddString(MOUTON_AUTHOR_DONATE_ESOUI, "Page sur ESOUI", 1)
+SafeAddString(MOUTON_AUTHOR_DONATE_CROWNS, "Don en couronnes", 1)
+
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED,             "Ajouter / retirer la cible des joueurs bannis", 1)
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED_WITH_NOTE,   "Ajouter / retirer la cible des bannis et éditer la note", 1)
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_GET_NOTE,                   "Afficher les infos du dernier joueur ciblé", 1)

@@ -5,8 +5,10 @@ ToxicPlayers = {
     options = {
         type = "panel",
         name = "Toxic Players",
-        author = "mouton",
-        version = "1.8.0"
+        author = "|c0cccc0@mouton|r",
+        recipient = "@mouton",
+        version = "1.9.0",
+        website = "https://www.esoui.com/downloads/info1894-ToxicPlayersEasyTargets.html"
     },
     command = "/toxicplayers",
     localSettings = {},
