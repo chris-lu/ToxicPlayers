@@ -7,7 +7,7 @@ ToxicPlayers = {
         name = "Toxic Players",
         author = "|c0cccc0@mouton|r",
         recipient = "@mouton",
-        version = "1.9.1",
+        version = "1.9.2",
         website = "https://www.esoui.com/downloads/info1894-ToxicPlayersEasyTargets.html"
     },
     command = "/toxicplayers",
