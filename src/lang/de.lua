@@ -53,6 +53,8 @@ SafeAddString(TOXICPLAYERS_SI_BANNED_NOTE,             "Verbannt Notiz für <<1>
 SafeAddString(TOXICPLAYERS_SI_NO_IGNORE_NOTE,          "Keine Notizen für den ignorierten Spieler <<1>><<2>>", 1)
 SafeAddString(TOXICPLAYERS_SI_NO_BANNED_NOTE,          "Keine Notizen für den verbannt Spieler <<1>><<2>>", 1)
 SafeAddString(TOXICPLAYERS_SI_WITH_CHAR,               " mit <<1>>", 1)
+SafeAddString(TOXICPLAYERS_SI_FRIEND_REMOVED,          "|cFF3333<<1>> ist kein Freund mehr|r", 1)
+SafeAddString(TOXICPLAYERS_SI_FRIEND_NOT_EXISTS,       "|cFF3333<<1>> ist kein Freund mehr|r (oder hat seinen Kontonamen geändert)", 1)
 
 SafeAddString(MOUTON_AUTHOR_FEEDBACK_MAIL, "Mail-Feedback im Spiel", 1)
 SafeAddString(MOUTON_AUTHOR_FEEDBACK_MAIL_HEADER, "Feedback für <<1>> (<<2>>)", 1)
@@ -66,4 +68,5 @@ SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED,             "Hinz
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED_WITH_NOTE,   "Hinzufügen/Entfernen Spieler (Ignoriert Liste) + Notiz", 1)
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_GET_NOTE,                   "Notiz für letzten Spieler anzeigen", 1)
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_REPORT,                     "Spieler melden", 1)
-SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_WHISPER_TARGET,       		       "Flüstern an der letzter Spieler", 1)
+SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_WHISPER_TARGET,       		   "Flüstern an der letzter Spieler", 1)
+SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_SHARE_TARGET,       		       "Teile den ausgewählten Spieler mit der Gruppe", 1)

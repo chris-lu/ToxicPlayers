@@ -7,7 +7,7 @@ ToxicPlayers = {
         name = "Toxic Players",
         author = "|c0cccc0@mouton|r",
         recipient = "@mouton",
-        version = "1.9.2",
+        version = "1.11.0",
         website = "https://www.esoui.com/downloads/info1894-ToxicPlayersEasyTargets.html"
     },
     command = "/toxicplayers",
@@ -27,7 +27,8 @@ ToxicPlayers = {
         automaticPlayerInfo = false,
         positionName = TOP,
         positionIcon = BOTTOM,
-        variableVersion = 3
+        variableVersion = 3,
+        friendList = {}
     },
     STYLES = {
         DEFAULT = { color = ZO_ColorDef:New(1, 1, 1, 1), icon = '', marker = false },
@@ -52,7 +53,6 @@ local latestAutoInfo = nil
 local editNote = nil
 local guildMates = {}
 local guildBlacklist = {}
-
 
 function TP.FixPositions()
     local settings = TP.getSettings()
@@ -154,6 +154,28 @@ function TP.OnTargetHasChanged(eventcode, invname)
     else
         TP.SetReticleStyle(TPStyles.DEFAULT, "", true, false)
     end
+end
+
+function TP.OnFriendRemoved(eventCode, displayName, unknown)
+    local settings = TP.getSettings()
+    if settings.friendList[GetWorldName()] == nil then
+        settings.friendList[GetWorldName()] = {}
+    end 
+    local friends = settings.friendList[GetWorldName()]
+
+    local playerLink = ZO_LinkHandler_CreateDisplayNameLink(displayName)
+    local formatedNote = ""
+
+    if unknown == true then  
+        formatedNote = zo_strformat(TOXICPLAYERS_SI_FRIEND_NOT_EXISTS, playerLink)
+    else 
+        formatedNote = zo_strformat(TOXICPLAYERS_SI_FRIEND_REMOVED, playerLink)
+    end
+
+    CHAT_SYSTEM:Maximize()
+    CHAT_SYSTEM:AddMessage(formatedNote)
+
+    friends[displayName] = nil
 end
 
 function TP.EncoutnerPlayer(style, name, hidden, marker)
@@ -325,6 +347,12 @@ function TP.ToggleTargetIgnore(addNote)
     end
 end
 
+function TP.ShareTarget()
+    if IsUnitAttackable('reticleover') then
+        AssignTargetMarkerToReticleTarget(TARGET_MARKER_TYPE_EIGHT or GetUnitTargetMarkerType('reticleover'))
+    end
+end
+
 function TP.ReportTarget()
     -- Adding player to ignore as Zenimax is doing to avoid abuses. Do not report players already ignored.
     if TP.CanUseIgnore() and not IsUnitIgnored('reticleover') then
@@ -394,6 +422,29 @@ function TP.InitGuildBlacklist()
     end
 end
 
+function TP.InitFriends()
+    local settings = TP.getSettings()
+    if settings.friendList[GetWorldName()] == nil then
+        settings.friendList[GetWorldName()] = {}
+    end 
+    local friends = settings.friendList[GetWorldName()]
+
+    -- Check for missing friends
+    for displayName, _ in pairs(friends) do
+        if not IsFriend(displayName) then
+			TP.OnFriendRemoved(EVENT_FRIEND_REMOVED, displayName, true)
+		end
+    end
+
+    -- Refresh the list
+    for i = 1, GetNumFriends() do
+        local displayName, note, _, _ = GetFriendInfo(i)
+        if friends[displayName] == nil then
+            friends[displayName] = true
+        end
+    end
+end
+
 function TP.SlashCommand(commandArgs)
     local options = {}
     -- Split words
@@ -411,6 +462,10 @@ function TP.OnAddOnLoaded(event, addonName)
     if addonName ~= TP.name then return end
 
     TP:Initialize()
+end
+
+function TP.OnPlayerLoaded(event)
+    TP:InitializePlayer()
 end
 
 function TP:Initialize()
@@ -436,10 +491,19 @@ function TP:Initialize()
     EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_GUILD_MEMBER_ADDED, TP.InitGuildMates)
     EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_GUILD_MEMBER_REMOVED, TP.InitGuildMates)
     EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_GUILD_FINDER_BLACKLIST_RESPONSE, TP.InitGuildBlacklist)
+	EVENT_MANAGER:RegisterForEvent(TP.name .. "Friend", EVENT_FRIEND_REMOVED, TP.OnFriendRemoved)
+	EVENT_MANAGER:RegisterForEvent(TP.name .. "Friends", EVENT_FRIEND_ADDED, TP.InitFriends)
+    EVENT_MANAGER:RegisterForEvent(TP.name .. "Friends", EVENT_FRIEND_REMOVED, TP.InitFriends)
 
     EVENT_MANAGER:UnregisterForEvent(TP.name, EVENT_ADD_ON_LOADED)
 
     SLASH_COMMANDS[TP.command] = TP.SlashCommand
 end
 
+function TP:InitializePlayer()
+    TP.InitFriends()
+    EVENT_MANAGER:UnregisterForEvent(TP.name, EVENT_PLAYER_ACTIVATED)
+end
+
 EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_ADD_ON_LOADED, TP.OnAddOnLoaded)
+EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_PLAYER_ACTIVATED, TP.OnPlayerLoaded)

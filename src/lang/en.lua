@@ -57,6 +57,8 @@ SafeAddString(TOXICPLAYERS_SI_BANNED_NOTE,             "Ban note for <<1>><<2>>:
 SafeAddString(TOXICPLAYERS_SI_NO_IGNORE_NOTE,          "No ignore note for <<1>><<2>>", 1)
 SafeAddString(TOXICPLAYERS_SI_NO_BANNED_NOTE,          "No ban note for <<1>><<2>>", 1)
 SafeAddString(TOXICPLAYERS_SI_WITH_CHAR,               " with <<1>>", 1)
+SafeAddString(TOXICPLAYERS_SI_FRIEND_REMOVED,          "|cFF3333<<1>> is a friend no more|r", 1)
+SafeAddString(TOXICPLAYERS_SI_FRIEND_NOT_EXISTS,       "|cFF3333<<1>> is a friend no more|r (or changed their ID)", 1)
 
 SafeAddString(MOUTON_AUTHOR_FEEDBACK_MAIL, "In-game mail feedback", 1)
 SafeAddString(MOUTON_AUTHOR_FEEDBACK_MAIL_HEADER, "Feedback for <<1>> (<<2>>)", 1)
@@ -70,6 +72,6 @@ SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED,             "Add/
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED_WITH_NOTE,   "Add/remove target from ignore list and edit ignore note", 1)
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_GET_NOTE,                   "Display info about the latest target", 1)
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_REPORT,                     "Report the targeted player", 1)
-SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_WHISPER_TARGET,       		       "Whisper to the latest targeted player", 1)
-
+SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_WHISPER_TARGET,                 "Whisper to the latest targeted player", 1)
+SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_SHARE_TARGET,                   "Share the targeted player to the group", 1)
 --]]

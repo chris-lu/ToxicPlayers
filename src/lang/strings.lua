@@ -53,6 +53,8 @@ local strings = {
   TOXICPLAYERS_SI_BANNED_NOTE = "Banned note for <<1>><<2>>: <<3>>",
   TOXICPLAYERS_SI_NO_IGNORE_NOTE = "No ignore note for <<1>><<2>>",
   TOXICPLAYERS_SI_WITH_CHAR =" with <<1>>",
+  TOXICPLAYERS_SI_FRIEND_REMOVED = "|cFF3333<<1>> is a friend no more|r",
+  TOXICPLAYERS_SI_FRIEND_NOT_EXISTS = "|cFF3333<<1>> is a friend no more|r (or changed their ID)",
 
   MOUTON_AUTHOR_FEEDBACK_MAIL = "In-game mail feedback",
   MOUTON_AUTHOR_FEEDBACK_MAIL_HEADER = "Feedback for <<1>> (<<2>>)",
@@ -66,8 +68,8 @@ local strings = {
   SI_BINDING_NAME_TOXICPLAYERS_KEY_TOGGLE_IGNORED_WITH_NOTE = "Add/remove target from ignore list and edit ignore note",
   SI_BINDING_NAME_TOXICPLAYERS_KEY_GET_NOTE = "Display info about the latest target",
   SI_BINDING_NAME_TOXICPLAYERS_KEY_REPORT = "Report the targeted player",
-  SI_BINDING_NAME_TOXICPLAYERS_WHISPER_TARGET = "Whisper to the latest targeted player"
-
+  SI_BINDING_NAME_TOXICPLAYERS_WHISPER_TARGET = "Whisper to the latest targeted player",
+  SI_BINDING_NAME_TOXICPLAYERS_SHARE_TARGET = "Share the targeted player to the group"
 }
 
 for stringId, stringValue in pairs(strings) do

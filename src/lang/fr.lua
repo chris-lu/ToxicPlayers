@@ -53,6 +53,8 @@ SafeAddString(TOXICPLAYERS_SI_BANNED_NOTE,             "Note pour le joueur bann
 SafeAddString(TOXICPLAYERS_SI_NO_IGNORE_NOTE,          "Aucune note pour le joueur ignoré <<1>><<2>>", 1)
 SafeAddString(TOXICPLAYERS_SI_NO_BANNED_NOTE,          "Note pour le joueur banni <<1>><<2>> : <<3>>", 1)
 SafeAddString(TOXICPLAYERS_SI_WITH_CHAR,               " avec <<1>>", 1)
+SafeAddString(TOXICPLAYERS_SI_FRIEND_REMOVED,          "|cFF3333<<1>> n'est plus un ami|r", 1)
+SafeAddString(TOXICPLAYERS_SI_FRIEND_NOT_EXISTS,       "|cFF3333<<1>> n'est plus un ami|r (ou a changé de nom de compte)", 1)
 
 SafeAddString(MOUTON_AUTHOR_FEEDBACK_MAIL, "Commentaires par messagerie", 1)
 SafeAddString(MOUTON_AUTHOR_FEEDBACK_MAIL_HEADER, "Commentaires pour <<1>> (<<2>>)", 1)
@@ -68,4 +70,4 @@ SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_GET_NOTE,                   "Affi
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_REPORT,       		       "Signaler le joueur ciblé", 1)
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_KEY_REPORT,       		       "Signaler le joueur ciblé", 1)
 SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_WHISPER_TARGET,       		   "Chochoter au dernier joueur ciblé", 1)
-
+SafeAddString(SI_BINDING_NAME_TOXICPLAYERS_SHARE_TARGET,       		       "Partager au groupe le joueur ciblé", 1)

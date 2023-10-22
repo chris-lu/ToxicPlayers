@@ -10,6 +10,9 @@
 			<Action name="TOXICPLAYERS_KEY_GET_NOTE">
 				<Down>ToxicPlayers.GetPlayerInfo()</Down>
 			</Action>
+			<Action name="TOXICPLAYERS_SHARE_TARGET">
+				<Down>ToxicPlayers.ShareTarget()</Down>
+			</Action>
 			<Action name="TOXICPLAYERS_KEY_REPORT">
 				<Down>ToxicPlayers.ReportTarget()</Down>
 			</Action>
