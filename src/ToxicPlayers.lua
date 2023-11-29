@@ -7,7 +7,7 @@ ToxicPlayers = {
         name = "Toxic Players",
         author = "|c0cccc0@mouton|r",
         recipient = "@mouton",
-        version = "1.11.0",
+        version = "1.11.1",
         website = "https://www.esoui.com/downloads/info1894-ToxicPlayersEasyTargets.html"
     },
     command = "/toxicplayers",
@@ -160,15 +160,15 @@ function TP.OnFriendRemoved(eventCode, displayName, unknown)
     local settings = TP.getSettings()
     if settings.friendList[GetWorldName()] == nil then
         settings.friendList[GetWorldName()] = {}
-    end 
+    end
     local friends = settings.friendList[GetWorldName()]
 
     local playerLink = ZO_LinkHandler_CreateDisplayNameLink(displayName)
     local formatedNote = ""
 
-    if unknown == true then  
+    if unknown == true then
         formatedNote = zo_strformat(TOXICPLAYERS_SI_FRIEND_NOT_EXISTS, playerLink)
-    else 
+    else
         formatedNote = zo_strformat(TOXICPLAYERS_SI_FRIEND_REMOVED, playerLink)
     end
 
@@ -426,14 +426,14 @@ function TP.InitFriends()
     local settings = TP.getSettings()
     if settings.friendList[GetWorldName()] == nil then
         settings.friendList[GetWorldName()] = {}
-    end 
+    end
     local friends = settings.friendList[GetWorldName()]
 
     -- Check for missing friends
     for displayName, _ in pairs(friends) do
         if not IsFriend(displayName) then
-			TP.OnFriendRemoved(EVENT_FRIEND_REMOVED, displayName, true)
-		end
+            TP.OnFriendRemoved(EVENT_FRIEND_REMOVED, displayName, true)
+        end
     end
 
     -- Refresh the list
@@ -491,8 +491,8 @@ function TP:Initialize()
     EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_GUILD_MEMBER_ADDED, TP.InitGuildMates)
     EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_GUILD_MEMBER_REMOVED, TP.InitGuildMates)
     EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_GUILD_FINDER_BLACKLIST_RESPONSE, TP.InitGuildBlacklist)
-	EVENT_MANAGER:RegisterForEvent(TP.name .. "Friend", EVENT_FRIEND_REMOVED, TP.OnFriendRemoved)
-	EVENT_MANAGER:RegisterForEvent(TP.name .. "Friends", EVENT_FRIEND_ADDED, TP.InitFriends)
+    EVENT_MANAGER:RegisterForEvent(TP.name .. "Friend", EVENT_FRIEND_REMOVED, TP.OnFriendRemoved)
+    EVENT_MANAGER:RegisterForEvent(TP.name .. "Friends", EVENT_FRIEND_ADDED, TP.InitFriends)
     EVENT_MANAGER:RegisterForEvent(TP.name .. "Friends", EVENT_FRIEND_REMOVED, TP.InitFriends)
 
     EVENT_MANAGER:UnregisterForEvent(TP.name, EVENT_ADD_ON_LOADED)
