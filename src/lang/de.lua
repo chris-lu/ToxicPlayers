@@ -44,6 +44,7 @@ SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_POSITION_ICON_TOOLTIP,       "", 1)
 SafeAddString(TOXICPLAYERS_OPTION_ACCOUNT_WIDE,   "Accountweites Profil verwenden", 1)
 SafeAddString(TOXICPLAYERS_OPTION_ACCOUNT_WIDE_TOOLTIP,       "Durch das Wechseln zwischen lokalen und globalen Profilen wird die Benutzeroberfläche neu geladen.", 1)
 
+SafeAddString(TOXICPLAYERS_SI_GROUP_INFO,              "[Gruppe] ", 1)
 SafeAddString(TOXICPLAYERS_SI_UNKNOWN_PLAYER_INFO,     "Du hast <<1>><<2>> getroffen", 1)
 SafeAddString(TOXICPLAYERS_SI_FRIEND_PLAYER_INFO,      "Du hast deinen Freund <<1>><<2>> getroffen", 1)
 SafeAddString(TOXICPLAYERS_SI_MUTED_PLAYER_INFO,       "Du hast <<1>><<2>> getroffen", 1)

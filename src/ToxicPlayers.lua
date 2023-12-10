@@ -122,38 +122,53 @@ function TP.OnReticleHidden(eventcode)
     TP.SetReticleStyle(TPStyles.DEFAULT, "", true)
 end
 
-function TP.OnTargetHasChanged(eventcode, invname)
-    if IsUnitPlayer('reticleover') then
-        local settings = TP.getSettings()
-        local marker = settings.displayMarker and GetUnitTargetMarkerType('reticleover') == 0
-            -- Check player ignore list
-        if settings.displayOnIgnored and IsUnitIgnored('reticleover') then
-            TP.SetLastestPlayer(TP.GetLastestPlayer(TYPE_IGNORED))
-            TP.EncoutnerPlayer(TPStyles.IGNORED, GetString(TOXICPLAYERS_IGNORED), false, marker)
-            -- Display not grouped friends as well
-        elseif settings.displayOnFriends and not IsUnitGrouped('reticleover') and IsUnitFriend('reticleover') then
-            TP.SetLastestPlayer(TP.GetLastestPlayer(TYPE_FRIENDS))
-            TP.EncoutnerPlayer(TPStyles.FRIENDS, GetString(TOXICPLAYERS_FRIEND), false, marker)
-            -- Display not grouped on guild mates
-        elseif settings.displayOnGuild and not IsUnitGrouped('reticleover') and TP.IsUnitGuildMate('reticleover') then
-            TP.SetLastestPlayer(TP.GetLastestPlayer(TYPE_GUILD))
-            TP.EncoutnerPlayer(TPStyles.GUILD, guildMates[latestPlayer.playerName].guildName, false, marker)
-            -- Display on blacklisted users from a guild
-        elseif settings.displayOnGuildBlacklist and not IsUnitGrouped('reticleover') and TP.IsUnitGuildBlacklist('reticleover') then
-            TP.SetLastestPlayer(TP.GetLastestPlayer(TYPE_BLACKLIST))
-            TP.EncoutnerPlayer(TPStyles.BLACKLIST, guildBlacklist[latestPlayer.playerName].guildName, false, marker)
-            -- No list, but save info
-        elseif settings.displayOnUnknown then
-            TP.SetLastestPlayer(TP.GetLastestPlayer(TYPE_UNKNOWN))
-            TP.EncoutnerPlayer(TPStyles.DEFAULT, "", true, false)
-            -- No list, reset.
-        else
-            TP.SetReticleStyle(TPStyles.DEFAULT, "", true, false)
-        end
-        -- No target, reset.
+function TP.GetPlayerType(unitTag)
+    local settings = TP.getSettings()
+
+    if settings.displayOnIgnored and IsUnitIgnored(unitTag) then
+        return TYPE_IGNORED
+        -- Display not grouped friends as well
+    elseif settings.displayOnFriends and IsUnitFriend(unitTag) then
+        return TYPE_FRIENDS
+        -- Display not grouped on guild mates
+    elseif settings.displayOnGuild and TP.IsUnitGuildMate(unitTag) then
+        return TYPE_GUILD
+        -- Display on blacklisted users from a guild
+    elseif settings.displayOnGuildBlacklist and TP.IsUnitGuildBlacklist(unitTag) then
+        return TYPE_BLACKLIST
+        -- No list, but save info
+    elseif settings.displayOnUnknown then
+        return TYPE_UNKNOWN
+        -- No list, reset.
     else
-        TP.SetReticleStyle(TPStyles.DEFAULT, "", true, false)
+        return nil
     end
+end
+
+function TP.OnTargetHasChanged(eventcode, invname)
+    if IsUnitPlayer('reticleover') and not IsUnitGrouped('reticleover') then
+        local settings = TP.getSettings()
+        local playerType = TP.GetPlayerType('reticleover')
+
+        if playerType then
+            local marker = settings.displayMarker and GetUnitTargetMarkerType('reticleover') == 0
+            TP.SetLastestPlayer(TP.GetPlayerInfos(playerType, 'reticleover'))
+
+            if playerType == TYPE_IGNORED then
+                TP.EncoutnerPlayer(TPStyles.IGNORED, GetString(TOXICPLAYERS_IGNORED), false, marker)
+            elseif playerType == TYPE_FRIENDS then
+                TP.EncoutnerPlayer(TPStyles.FRIENDS, GetString(TOXICPLAYERS_FRIEND), false, marker)
+            elseif playerType == TYPE_GUILD then
+                TP.EncoutnerPlayer(TPStyles.GUILD, guildMates[latestPlayer.playerName].guildName, false, marker)
+            elseif playerType == TYPE_BLACKLIST then
+                TP.EncoutnerPlayer(TPStyles.BLACKLIST, guildBlacklist[latestPlayer.playerName].guildName, false, marker)
+            elseif playerType == TYPE_UNKNOWN then
+                TP.EncoutnerPlayer(TPStyles.DEFAULT, "", true, false)
+            end
+            return
+        end
+    end
+    TP.SetReticleStyle(TPStyles.DEFAULT, "", true, false)
 end
 
 function TP.OnFriendRemoved(eventCode, displayName, unknown)
@@ -178,6 +193,22 @@ function TP.OnFriendRemoved(eventCode, displayName, unknown)
     friends[displayName] = nil
 end
 
+function TP.OnGroupMemberJoined(eventCode, memberCharacterName, memberDisplayName, isLocalPlayer)
+    for i = 1, GetGroupSize() do
+        local unitTag = GetGroupUnitTagByIndex(i)
+
+        -- If the player join the group, then, it's his/hes own name there only, then we check all the group
+        if GetUnitDisplayName('player') ~= GetUnitDisplayName(unitTag) and (isLocalPlayer or GetUnitDisplayName(unitTag) == memberDisplayName) then
+            local playerType = TP.GetPlayerType(unitTag)
+
+            if playerType then
+                local player = TP.GetPlayerInfos(playerType, unitTag)
+                TP.DisplayPlayerInfo(player)
+            end
+        end
+    end
+end
+
 function TP.EncoutnerPlayer(style, name, hidden, marker)
     local settings = TP.getSettings()
 
@@ -185,7 +216,7 @@ function TP.EncoutnerPlayer(style, name, hidden, marker)
 
     if settings.automaticPlayerInfo then
         local l = latestPlayer
-        TP.GetAutomaticPlayerInfo()
+        TP.DisplayAutomaticPlayerInfo()
         latestAutoInfo = l
     end
 end
@@ -197,15 +228,24 @@ function TP.SetLastestPlayer(player)
     latestPlayer = player
 end
 
-function TP.GetLastestPlayer(type)
+function TP.GetPlayerInfos(type, unitTag)
     local settings = TP.getSettings()
     if settings.displayName == TP_DISPLAY_NAME_ID then
-        return { playerType = type, playerName = GetUnitDisplayName('reticleover') }
+        return {
+            playerType = type,
+            playerName = GetUnitDisplayName(unitTag)
+        }
     elseif settings.displayName == TP_DISPLAY_NAME_CHARACTER then
-        return { playerType = type, characterName = GetUnitName('reticleover') }
+        return {
+            playerType = type,
+            characterName = GetUnitName(unitTag)
+        }
     else
-        return { playerType = type, playerName = GetUnitDisplayName('reticleover'),
-            characterName = GetUnitName('reticleover') }
+        return {
+            playerType = type,
+            playerName = GetUnitDisplayName(unitTag),
+            characterName = GetUnitName(unitTag)
+        }
     end
 end
 
@@ -239,51 +279,54 @@ function TP.UpdatePlayerNote(eventcode, playerName)
     latestEvent = GetGameTimeMilliseconds()
 end
 
-function TP.GetAutomaticPlayerInfo()
+function TP.DisplayAutomaticPlayerInfo()
     if GetGameTimeMilliseconds() - latestEvent > SOCIAL_RATE_DELAY and latestPlayer.playerType ~= TYPE_UNKNOWN and (latestAutoInfo == nil or latestAutoInfo.playerName ~= latestPlayer.playerName) then
-        TP.GetPlayerInfo()
+        TP.DisplayPlayerInfo()
     end
 end
 
-function TP.GetPlayerInfo()
-    if TP.IsSocialAllowed() and latestPlayer then
+function TP.DisplayPlayerInfo(player)
+    if (TP.IsSocialAllowed() and latestPlayer) or player then
+
         local formatedNote = nil
         local playerLink = ""
         local characterLink = ""
+        local prefix = ""
 
-        if latestPlayer.playerName then
-            playerLink = ZO_LinkHandler_CreateDisplayNameLink(latestPlayer.playerName)
-            if latestPlayer.characterName then
-                characterLink = zo_strformat(TOXICPLAYERS_SI_WITH_CHAR,
-                    ZO_LinkHandler_CreateCharacterLink(latestPlayer.characterName))
-            end
-        elseif latestPlayer.characterName then
-            playerLink = ZO_LinkHandler_CreateCharacterLink(latestPlayer.characterName)
+        if not player then
+            player = latestPlayer
+        else
+            -- If we have a specific player, we're in a group
+            prefix = zo_strformat(TOXICPLAYERS_SI_GROUP_INFO)
         end
 
-        if latestPlayer.playerType == TYPE_UNKNOWN then
+        if player.playerName then
+            playerLink = ZO_LinkHandler_CreateDisplayNameLink(player.playerName)
+            if player.characterName then
+                characterLink = zo_strformat(TOXICPLAYERS_SI_WITH_CHAR, ZO_LinkHandler_CreateCharacterLink(player.characterName))
+            end
+        elseif player.characterName then
+            playerLink = ZO_LinkHandler_CreateCharacterLink(player.characterName)
+        end
+
+        if player.playerType == TYPE_UNKNOWN then
             formatedNote = zo_strformat(TOXICPLAYERS_SI_UNKNOWN_PLAYER_INFO, playerLink, characterLink)
-        elseif latestPlayer.playerType == TYPE_FRIENDS then
+        elseif player.playerType == TYPE_FRIENDS then
             formatedNote = zo_strformat(TOXICPLAYERS_SI_FRIEND_PLAYER_INFO, playerLink, characterLink)
-        elseif latestPlayer.playerType == TYPE_GUILD then
-            formatedNote = zo_strformat(TOXICPLAYERS_SI_GUILD_PLAYER_INFO, playerLink, characterLink,
-                GetGuildRecruitmentLink(guildMates[latestPlayer.playerName].guildId, LINK_STYLE_DEFAULT))
-        elseif latestPlayer.playerType == TYPE_IGNORED then
-            local playerNote = TP.GetPlayerIgnoreNote(latestPlayer.playerName)
-            formatedNote = (playerNote == nil or playerNote == "") and
-                zo_strformat(TOXICPLAYERS_SI_NO_IGNORE_NOTE, playerLink, characterLink) or
-                zo_strformat(TOXICPLAYERS_SI_IGNORE_NOTE, playerLink, characterLink, playerNote)
-        elseif latestPlayer.playerType == TYPE_BLACKLIST then
-            local playerNote = TP.GetPlayerBannedNote(latestPlayer.playerName)
-            formatedNote = (playerNote == nil or playerNote == "") and
-                zo_strformat(TOXICPLAYERS_SI_NO_BANNED_NOTE, playerLink, characterLink) or
-                zo_strformat(TOXICPLAYERS_SI_BANNED_NOTE, playerLink, characterLink, playerNote)
+        elseif player.playerType == TYPE_GUILD then
+            formatedNote = zo_strformat(TOXICPLAYERS_SI_GUILD_PLAYER_INFO, playerLink, characterLink, GetGuildRecruitmentLink(guildMates[player.playerName].guildId, LINK_STYLE_DEFAULT))
+        elseif player.playerType == TYPE_IGNORED then
+            local playerNote = TP.GetPlayerIgnoreNote(player.playerName)
+            formatedNote = (playerNote == nil or playerNote == "") and zo_strformat(TOXICPLAYERS_SI_NO_IGNORE_NOTE, playerLink, characterLink) or zo_strformat(TOXICPLAYERS_SI_IGNORE_NOTE, playerLink, characterLink, playerNote)
+        elseif player.playerType == TYPE_BLACKLIST then
+            local playerNote = TP.GetPlayerBannedNote(player.playerName)
+            formatedNote = (playerNote == nil or playerNote == "") and zo_strformat(TOXICPLAYERS_SI_NO_BANNED_NOTE, playerLink, characterLink) or zo_strformat(TOXICPLAYERS_SI_BANNED_NOTE, playerLink, characterLink, playerNote)
         end
 
         if formatedNote then
             -- Display the notes in the chat for now
             CHAT_SYSTEM:Maximize()
-            CHAT_SYSTEM:AddMessage(formatedNote)
+            CHAT_SYSTEM:AddMessage(prefix .. formatedNote)
         end
 
         -- Display info just once
@@ -330,7 +373,11 @@ function TP.ToggleTargetIgnore(addNote)
                     -- Resetting social timer, so the note is sure to be linked to the correct player.
                     latestEvent = GetGameTimeMilliseconds()
                 end
-                local data = { displayName = playerName, note = nil, changedCallback = IgnoreSelectedPlayerWithNote }
+                local data = {
+                    displayName = playerName,
+                    note = nil,
+                    changedCallback = IgnoreSelectedPlayerWithNote
+                }
 
                 if IsInGamepadPreferredMode() then
                     ZO_Dialogs_ShowGamepadDialog("GAMEPAD_SOCIAL_EDIT_NOTE_DIALOG", data)
@@ -400,7 +447,11 @@ function TP.InitGuildMates()
             local displayName, note, _, _ = GetGuildMemberInfo(guildId, memberIndex)
             -- Keep just the first guild
             if guildMates[displayName] == nil then
-                guildMates[displayName] = { note = note, guildName = guildName, guildId = guildId }
+                guildMates[displayName] = {
+                    note = note,
+                    guildName = guildName,
+                    guildId = guildId
+                }
             end
         end
     end
@@ -416,7 +467,11 @@ function TP.InitGuildBlacklist()
             local displayName, note = GetGuildBlacklistInfoAt(guildId, memberIndex)
             -- Keep just the first guild
             if guildBlacklist[displayName] == nil then
-                guildBlacklist[displayName] = { note = note, guildName = guildName, guildId = guildId }
+                guildBlacklist[displayName] = {
+                    note = note,
+                    guildName = guildName,
+                    guildId = guildId
+                }
             end
         end
     end
@@ -448,18 +503,24 @@ end
 function TP.SlashCommand(commandArgs)
     local options = {}
     -- Split words
-    local searchResult = { string.match(commandArgs, "^((%S*)%s*)*$") }
+    local searchResult = {string.match(commandArgs, "^((%S*)%s*)*$")}
     for w in commandArgs:gmatch("%S+") do
         options[#options + 1] = string.lower(w)
     end
 
     -- Templates commands
-    if options[1] == "info" or options[1] == nil then TP.GetPlayerInfo() end
-    if options[1] == "whisp" or options[1] == "whisper" then TP.Whisper() end
+    if options[1] == "info" or options[1] == nil then
+        TP.DisplayPlayerInfo()
+    end
+    if options[1] == "whisp" or options[1] == "whisper" then
+        TP.Whisper()
+    end
 end
 
 function TP.OnAddOnLoaded(event, addonName)
-    if addonName ~= TP.name then return end
+    if addonName ~= TP.name then
+        return
+    end
 
     TP:Initialize()
 end
@@ -491,6 +552,7 @@ function TP:Initialize()
     EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_GUILD_MEMBER_ADDED, TP.InitGuildMates)
     EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_GUILD_MEMBER_REMOVED, TP.InitGuildMates)
     EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_GUILD_FINDER_BLACKLIST_RESPONSE, TP.InitGuildBlacklist)
+    EVENT_MANAGER:RegisterForEvent(TP.name, EVENT_GROUP_MEMBER_JOINED, TP.OnGroupMemberJoined)
     EVENT_MANAGER:RegisterForEvent(TP.name .. "Friend", EVENT_FRIEND_REMOVED, TP.OnFriendRemoved)
     EVENT_MANAGER:RegisterForEvent(TP.name .. "Friends", EVENT_FRIEND_ADDED, TP.InitFriends)
     EVENT_MANAGER:RegisterForEvent(TP.name .. "Friends", EVENT_FRIEND_REMOVED, TP.InitFriends)
