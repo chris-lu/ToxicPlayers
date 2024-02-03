@@ -96,12 +96,20 @@ function ToxicPlayers:CreateAddonMenu()
         },
         {
           type = "checkbox",
-          name = GetString(TOXICPLAYERS_OPTION_RETICLE_MARKER_DESCRIPTION),
-          tooltip = GetString(TOXICPLAYERS_OPTION_RETICLE_MARKER_TOOLTIP),
-          getFunc = function() return TP.settings.displayMarker end,
-          setFunc = function(value) TP.settings.displayMarker = value end,
+          name = GetString(TOXICPLAYERS_OPTION_RETICLE_FOE_MARKER_DESCRIPTION),
+          tooltip = GetString(TOXICPLAYERS_OPTION_RETICLE_FOE_MARKER_TOOLTIP),
+          getFunc = function() return TP.settings.displayFoeMarker end,
+          setFunc = function(value) TP.settings.displayFoeMarker = value end,
           width = "full"
       },
+      {
+        type = "checkbox",
+        name = GetString(TOXICPLAYERS_OPTION_RETICLE_FRIEND_MARKER_DESCRIPTION),
+        tooltip = GetString(TOXICPLAYERS_OPTION_RETICLE_FRIEND_MARKER_TOOLTIP),
+        getFunc = function() return TP.settings.displayFriendMarker end,
+        setFunc = function(value) TP.settings.displayFriendMarker = value end,
+        width = "full"
+    },      
       {
             type = "checkbox",
             name = GetString(TOXICPLAYERS_OPTION_DISPLAY_FRIENDS_DESCRIPTION),

@@ -7,16 +7,17 @@ ToxicPlayers = {
         name = "Toxic Players",
         author = "|c0cccc0@mouton|r",
         recipient = "@mouton",
-        version = "1.11.1",
+        version = "2.0.0",
         website = "https://www.esoui.com/downloads/info1894-ToxicPlayersEasyTargets.html"
     },
     command = "/toxicplayers",
     localSettings = {},
     accountSettings = {},
     defaultSettings = {
-        useAccountWide = false,
+        useAccountWide = true,
         displayText = false,
-        displayMarker = true,
+        displayFriendMarker = false,
+        displayFoeMarker = true,
         displayIcon = true,
         displayOnIgnored = true,
         displayOnGuild = true,
@@ -27,16 +28,36 @@ ToxicPlayers = {
         automaticPlayerInfo = false,
         positionName = TOP,
         positionIcon = BOTTOM,
-        variableVersion = 3,
+        variableVersion = 4,
         friendList = {}
     },
     STYLES = {
-        DEFAULT = { color = ZO_ColorDef:New(1, 1, 1, 1), icon = '', marker = false },
-        IGNORED = { color = ZO_ColorDef:New(1, 0.2, 0.2, .9), icon = '/esoui/art/contacts/tabicon_ignored_up.dds', marker = TARGET_MARKER_TYPE_SEVEN },
-        --      MUTED =   { color = ZO_ColorDef:New(1, 0.6, 0.2, .9), icon = '/esoui/art/contacts/tabicon_ignored_up.dds', marker = TARGET_MARKER_TYPE_FOUR  },
-        GUILD = { color = ZO_ColorDef:New(0.6, 0.7, 1, 1), icon = '/esoui/art/mainmenu/menubar_guilds_up.dds', marker = TARGET_MARKER_TYPE_ONE },
-        FRIENDS = { color = ZO_ColorDef:New(0.2, 1, 0.2, .9), icon = '/esoui/art/mainmenu/menubar_social_up.dds', marker = TARGET_MARKER_TYPE_THREE },
-        BLACKLIST = { color = ZO_ColorDef:New(1, 0.2, 0.2, .9), icon = 'esoui/art/guildfinder/keyboard/guildrecruitment_blacklist_up.dds', marker = TARGET_MARKER_TYPE_EIGHT }
+        DEFAULT = {
+            color = ZO_ColorDef:New(1, 1, 1, 1),
+            icon = '',
+            marker = false
+        },
+        IGNORED = {
+            color = ZO_ColorDef:New(1, 0.2, 0.2, .9),
+            icon = '/esoui/art/contacts/tabicon_ignored_up.dds',
+            marker = TARGET_MARKER_TYPE_SEVEN
+        },
+        -- MUTED =   { color = ZO_ColorDef:New(1, 0.6, 0.2, .9), icon = '/esoui/art/contacts/tabicon_ignored_up.dds', marker = TARGET_MARKER_TYPE_FOUR  },
+        GUILD = {
+            color = ZO_ColorDef:New(0.6, 0.7, 1, 1),
+            icon = '/esoui/art/mainmenu/menubar_guilds_up.dds',
+            marker = TARGET_MARKER_TYPE_ONE
+        },
+        FRIENDS = {
+            color = ZO_ColorDef:New(0.2, 1, 0.2, .9),
+            icon = '/esoui/art/mainmenu/menubar_social_up.dds',
+            marker = TARGET_MARKER_TYPE_THREE
+        },
+        BLACKLIST = {
+            color = ZO_ColorDef:New(1, 0.2, 0.2, .9),
+            icon = 'esoui/art/guildfinder/keyboard/guildrecruitment_blacklist_up.dds',
+            marker = TARGET_MARKER_TYPE_EIGHT
+        }
     }
 }
 
@@ -86,7 +107,7 @@ end
 function TP.SetReticleStyle(style, text, hidden, marker)
     ZO_ReticleContainerReticle:SetColor(style.color:UnpackRGB())
     local settings = TP.getSettings()
-    if settings.displayMarker and marker then
+    if marker then
         AssignTargetMarkerToReticleTarget(style.marker or GetUnitTargetMarkerType('reticleover'))
     end
 
@@ -119,7 +140,7 @@ function TP.SetReticleStyle(style, text, hidden, marker)
 end
 
 function TP.OnReticleHidden(eventcode)
-    TP.SetReticleStyle(TPStyles.DEFAULT, "", true)
+    TP.SetReticleStyle(TPStyles.DEFAULT, "", true, false)
 end
 
 function TP.GetPlayerType(unitTag)
@@ -151,17 +172,18 @@ function TP.OnTargetHasChanged(eventcode, invname)
         local playerType = TP.GetPlayerType('reticleover')
 
         if playerType then
-            local marker = settings.displayMarker and GetUnitTargetMarkerType('reticleover') == 0
+            -- Avoid removing existing markers on targets
+            local canDisplayMarker = GetUnitTargetMarkerType('reticleover') == 0
             TP.SetLastestPlayer(TP.GetPlayerInfos(playerType, 'reticleover'))
 
             if playerType == TYPE_IGNORED then
-                TP.EncoutnerPlayer(TPStyles.IGNORED, GetString(TOXICPLAYERS_IGNORED), false, marker)
+                TP.EncoutnerPlayer(TPStyles.IGNORED, GetString(TOXICPLAYERS_IGNORED), false, canDisplayMarker and settings.displayFoeMarker)
             elseif playerType == TYPE_FRIENDS then
-                TP.EncoutnerPlayer(TPStyles.FRIENDS, GetString(TOXICPLAYERS_FRIEND), false, marker)
+                TP.EncoutnerPlayer(TPStyles.FRIENDS, GetString(TOXICPLAYERS_FRIEND), false, canDisplayMarker and settings.displayFriendMarker)
             elseif playerType == TYPE_GUILD then
-                TP.EncoutnerPlayer(TPStyles.GUILD, guildMates[latestPlayer.playerName].guildName, false, marker)
+                TP.EncoutnerPlayer(TPStyles.GUILD, guildMates[latestPlayer.playerName].guildName, false, canDisplayMarker and settings.displayFriendMarker)
             elseif playerType == TYPE_BLACKLIST then
-                TP.EncoutnerPlayer(TPStyles.BLACKLIST, guildBlacklist[latestPlayer.playerName].guildName, false, marker)
+                TP.EncoutnerPlayer(TPStyles.BLACKLIST, guildBlacklist[latestPlayer.playerName].guildName, false, canDisplayMarker and settings.displayFoeMarker)
             elseif playerType == TYPE_UNKNOWN then
                 TP.EncoutnerPlayer(TPStyles.DEFAULT, "", true, false)
             end
@@ -295,7 +317,7 @@ function TP.DisplayPlayerInfo(player)
 
         if not player then
             player = latestPlayer
-        else
+        else 
             -- If we have a specific player, we're in a group
             prefix = zo_strformat(TOXICPLAYERS_SI_GROUP_INFO)
         end
