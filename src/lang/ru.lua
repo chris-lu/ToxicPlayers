@@ -33,6 +33,8 @@ SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_FRIENDS_DESCRIPTION, "Активиро
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_FRIENDS_TOOLTIP, "Если деактивировано, ToxicPlayers не будет уведомлять вас о друзьях, с которыми вы сталкиваетесь.", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_MUTED_DESCRIPTION, "Активировать ToxicPlayer для игроков без звука", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_MUTED_TOOLTIP, "Если деактивировано, ToxicPlayers не будет уведомлять вас о игроках без звука, с которыми вы сталкиваетесь (необходим аддон MuteList).", 1)
+SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_IN_GROUP_DESCRIPTION, "Включить пометку игроков, когда вы в группе", 1)
+SafeAddString(TOXICPLAYERS_OPTION_RETICLE_IN_GROUP_MARKER_TOOLTIP, "Если выбрано, ToxicPlayers будет отображать маркер даже когда вы в группе", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_IGNORED_DESCRIPTION, "Активировать ToxicPlayer для игнорируемых игроков", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_IGNORED_TOOLTIP, "Если деактивировано, ToxicPlayers не будет уведомлять вас о игнорируемых игроках, с которыми вы сталкиваетесь.", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_GUILD_DESCRIPTION, "Активировать ToxicPlayer для игроков гильдии", 1)

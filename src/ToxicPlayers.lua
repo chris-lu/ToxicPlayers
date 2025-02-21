@@ -7,7 +7,7 @@ ToxicPlayers = {
         name = "Toxic Players",
         author = "|c0cccc0@mouton|r",
         recipient = "@mouton",
-        version = "2.0.0",
+        version = "2.1.0",
         website = "https://www.esoui.com/downloads/info1894-ToxicPlayersEasyTargets.html"
     },
     command = "/toxicplayers",
@@ -19,6 +19,7 @@ ToxicPlayers = {
         displayFriendMarker = false,
         displayFoeMarker = true,
         displayIcon = true,
+        displayInGroups = false,
         displayOnIgnored = true,
         displayOnGuild = true,
         displayOnGuildBlacklist = true,
@@ -146,21 +147,25 @@ end
 function TP.GetPlayerType(unitTag)
     local settings = TP.getSettings()
 
-    if settings.displayOnIgnored and IsUnitIgnored(unitTag) then
-        return TYPE_IGNORED
-        -- Display not grouped friends as well
-    elseif settings.displayOnFriends and IsUnitFriend(unitTag) then
-        return TYPE_FRIENDS
-        -- Display not grouped on guild mates
-    elseif settings.displayOnGuild and TP.IsUnitGuildMate(unitTag) then
-        return TYPE_GUILD
-        -- Display on blacklisted users from a guild
-    elseif settings.displayOnGuildBlacklist and TP.IsUnitGuildBlacklist(unitTag) then
-        return TYPE_BLACKLIST
-        -- No list, but save info
-    elseif settings.displayOnUnknown then
-        return TYPE_UNKNOWN
-        -- No list, reset.
+    if settings.displayInGroups or not IsUnitGrouped("player") then
+        if settings.displayOnIgnored and IsUnitIgnored(unitTag) then
+            return TYPE_IGNORED
+            -- Display friends
+        elseif settings.displayOnFriends and IsUnitFriend(unitTag) then
+            return TYPE_FRIENDS
+            -- Display on guild mates
+        elseif settings.displayOnGuild and TP.IsUnitGuildMate(unitTag) then
+            return TYPE_GUILD
+            -- Display on blacklisted users from a guild
+        elseif settings.displayOnGuildBlacklist and TP.IsUnitGuildBlacklist(unitTag) then
+            return TYPE_BLACKLIST
+            -- No list, but save info
+        elseif settings.displayOnUnknown then
+            return TYPE_UNKNOWN
+            -- No list, reset.
+        else
+            return nil
+        end
     else
         return nil
     end
@@ -216,16 +221,19 @@ function TP.OnFriendRemoved(eventCode, displayName, unknown)
 end
 
 function TP.OnGroupMemberJoined(eventCode, memberCharacterName, memberDisplayName, isLocalPlayer)
-    for i = 1, GetGroupSize() do
-        local unitTag = GetGroupUnitTagByIndex(i)
+    local settings = TP.getSettings()
+    if settings.displayInGroups then
+        for i = 1, GetGroupSize() do
+            local unitTag = GetGroupUnitTagByIndex(i)
 
-        -- If the player join the group, then, it's his/hes own name there only, then we check all the group
-        if GetUnitDisplayName('player') ~= GetUnitDisplayName(unitTag) and (isLocalPlayer or GetUnitDisplayName(unitTag) == memberDisplayName) then
-            local playerType = TP.GetPlayerType(unitTag)
+            -- If the player join the group, then, it's his/hes own name there only, then we check all the group
+            if GetUnitDisplayName('player') ~= GetUnitDisplayName(unitTag) and (isLocalPlayer or GetUnitDisplayName(unitTag) == memberDisplayName) then
+                local playerType = TP.GetPlayerType(unitTag)
 
-            if playerType then
-                local player = TP.GetPlayerInfos(playerType, unitTag)
-                TP.DisplayPlayerInfo(player)
+                if playerType then
+                    local player = TP.GetPlayerInfos(playerType, unitTag)
+                    TP.DisplayPlayerInfo(player)
+                end
             end
         end
     end
@@ -317,7 +325,7 @@ function TP.DisplayPlayerInfo(player)
 
         if not player then
             player = latestPlayer
-        else 
+        else
             -- If we have a specific player, we're in a group
             prefix = zo_strformat(TOXICPLAYERS_SI_GROUP_INFO)
         end

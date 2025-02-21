@@ -31,6 +31,8 @@ SafeAddString(TOXICPLAYERS_OPTION_RETICLE_FOE_MARKER_DESCRIPTION,    "Display a 
 SafeAddString(TOXICPLAYERS_OPTION_RETICLE_FOE_MARKER_TOOLTIP,        "If activated, ToxicPlayers will activate the game marker icon above the targeted player (muted, ignored or banned)", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_FRIENDS_DESCRIPTION, "Activate ToxicPlayer over friends", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_FRIENDS_TOOLTIP,     "If deactivated, ToxicPlayers will not notify you about the friends you encounter", 1)
+SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_IN_GROUP_DESCRIPTION, "Enable player marking when you are in a group", 1)
+SafeAddString(TOXICPLAYERS_OPTION_RETICLE_IN_GROUP_MARKER_TOOLTIP, "If selected, ToxicPlayers will display a marker even when you are in a group", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_MUTED_DESCRIPTION,   "Activate ToxicPlayer over muted players", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_MUTED_TOOLTIP,       "If deactivated, ToxicPlayers will not notify you about the muted players you encounter (MuteList add-on is necessary)", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_IGNORED_DESCRIPTION, "Activate ToxicPlayer over ignored players", 1)

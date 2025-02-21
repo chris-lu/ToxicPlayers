@@ -26,6 +26,8 @@ SafeAddString(TOXICPLAYERS_OPTION_RETICLE_FOE_MARKER_DESCRIPTION,    "Afficher u
 SafeAddString(TOXICPLAYERS_OPTION_RETICLE_FOE_MARKER_TOOLTIP,        "Si sélectionné, ToxicPlayers affichera un marqueur permanent au dessus de l'ennemi lorsqu'il sera ciblé (ignoré, muet, ou banni)", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_FRIENDS_DESCRIPTION, "Activer ToxicPlayer sur les amis", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_FRIENDS_TOOLTIP,     "Si désélectionné, ToxicPlayers ne s'activera pas quand vous rencontrerez un ami", 1)
+SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_IN_GROUP_DESCRIPTION,    "Activer le marquage de joueur en groupe", 1)
+SafeAddString(TOXICPLAYERS_OPTION_RETICLE_IN_GROUP_MARKER_TOOLTIP,        "Si sélectionné, ToxicPlayers affichera un marqueur même quand vous êtes en groupe", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_MUTED_DESCRIPTION,   "Activer ToxicPlayer sur les joueurs muets", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_MUTED_TOOLTIP,       "Si désélectionné, ToxicPlayers ne s'activera pas quand vous rencontrerez un joueur muet (L'add-on MuteList est nécessaire)", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_IGNORED_DESCRIPTION, "Activer ToxicPlayer sur les joueurs ignorés", 1)

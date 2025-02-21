@@ -1,17 +1,48 @@
-ToxicPlayer is a Elder Scrolls Online social addon that enables you to spot ignored players more easily in the game by changing the reticle style.
-You'll then be able to focus your foes on the battle fields, not help the players ignored in your faction and even spot your friends or guild mates if they're not grouped with you. 
-You can as well easily add target players to your ignore list (ideal for PvP T-baggers) and report players using exploits or bots for example.
+# ToxicPlayers - Elder Scrolls Online Addon
 
+ToxicPlayers is a social addon for **The Elder Scrolls Online (ESO)** that enhances your gameplay by making it easier to identify ignored players, friends, guildmates, and muted players.
 
-Ignored players will be red marked, muted players (if you're using MuteList addon) will be orange displayed, friends players will be marked as green and guild mates (deactivated by default) will be shown in blue.
+With this addon, you can:
+- Spot ignored players by changing the **reticle style**.
+- Avoid unintentionally helping ignored players in PvP or PvE.
+- Quickly add players to your ignore list (ideal for **PvP T-baggers**).
+- Report players exploiting the game or using bots.
+- Recognize **friends and guildmates** who are not grouped with you.
 
-Now, you'll always remember your enemies.
+## Features
+- **Visual markers** near the crosshair for different player types:
+  - **Ignored players** → Red marker
+  - **Friends** → Green marker
+  - **Guild mates** (disabled by default) → Blue marker
+- **Single key press** to:
+  - Add the targeted player to your ignore list.
+  - Open the "Report Player" form for the targeted player.
+  - Display information about the last encountered player (friend, guildmate, muted, or ignored).
 
---------------------------------------------------------------------------------------------------
-Features
-Display a marker near the crosshair when targeting ignored players, friends, muted players or guild mates
-One key only to add the targeted player to your ignore list
-One key to open the "report player" form about the targeted player
-One key to display information about the latest encountered player (friend, guild mates, muted or ignored)
+## Installation
 
-It can also be downloaded at http://www.esoui.com/downloads/info1894-ToxicPlayers.html
+### Via Minion (Recommended)
+[Minion](https://minion.mmoui.com/) is a free addon manager that helps you **install, update, and manage** your ESO addons easily.
+
+1. Download and install Minion from [here](https://minion.mmoui.com/).
+2. Open Minion and let it detect your ESO addons folder.
+3. Search for **ToxicPlayers** in Minion.
+4. Click **Install** to add the addon to your game.
+5. Restart ESO and enable the addon in the **Add-ons menu**.
+
+### Manual Installation
+1. Download the addon from **ESOUI**: [ToxicPlayers on ESOUI](https://www.esoui.com/downloads/info1894-ToxicPlayers.html).
+2. Extract the ZIP file into your ESO addons folder:
+   - Windows: `Documents/Elder Scrolls Online/live/AddOns/`
+   - Mac: `~/Documents/Elder Scrolls Online/live/AddOns/`
+3. Restart ESO and enable the addon in the **Add-ons menu**.
+
+## Usage
+- **Enable/Disable Features:** Navigate to `Settings -> Add-ons -> ToxicPlayers` to configure markers.
+- **Assign Keybinds:** Set up hotkeys in `Controls -> Add-ons -> ToxicPlayers`.
+
+## Support & Feedback
+If you encounter issues or have feature requests, please:
+- Report bugs on [ESOUI](https://www.esoui.com/downloads/info1894-ToxicPlayers.html).
+- Use the **Minion Addon Manager** to check for updates.
+- Post suggestions or feedback in the ESO addon community.

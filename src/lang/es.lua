@@ -31,6 +31,8 @@ SafeAddString(TOXICPLAYERS_OPTION_RETICLE_FOE_MARKER_DESCRIPTION, "Mostrar una m
 SafeAddString(TOXICPLAYERS_OPTION_RETICLE_FOE_MARKER_TOOLTIP, "Si está activado, ToxicPlayers activará el icono de marca de juego sobre el jugador seleccionado (silenciado, ignorado o prohibido).", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_FRIENDS_DESCRIPTION, "Activar ToxicPlayer sobre amigos", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_FRIENDS_TOOLTIP, "Si está desactivado, ToxicPlayers no te notificará sobre los amigos que encuentres.", 1)
+SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_IN_GROUP_DESCRIPTION, "Activar el marcado de jugadores cuando estés en un grupo", 1)
+SafeAddString(TOXICPLAYERS_OPTION_RETICLE_IN_GROUP_MARKER_TOOLTIP, "Si está seleccionado, ToxicPlayers mostrará un marcador incluso cuando estés en un grupo", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_MUTED_DESCRIPTION, "Activar ToxicPlayer sobre jugadores silenciados", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_MUTED_TOOLTIP, "Si está desactivado, ToxicPlayers no te notificará sobre los jugadores silenciados que encuentres (se necesita el complemento MuteList).", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_IGNORED_DESCRIPTION, "Activar ToxicPlayer sobre jugadores ignorados", 1)

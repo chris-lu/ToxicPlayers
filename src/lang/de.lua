@@ -27,6 +27,8 @@ SafeAddString(TOXICPLAYERS_OPTION_RETICLE_FOE_MARKER_DESCRIPTION,    "Zeige Perm
 SafeAddString(TOXICPLAYERS_OPTION_RETICLE_FOE_MARKER_TOOLTIP,        "Wenn diese Option aktiviert ist, wird ToxicPlayers das Spielsymbol über dem ausgewählten Spieler anzeigen (verstummt, ignoriert oder verbannt)", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_FRIENDS_DESCRIPTION, "Aktiviere ToxicPlayer über Freunde", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_FRIENDS_TOOLTIP,     "Ist diese Option deaktiviert, denn ToxicPlayers wird nicht aktiviert, wenn du einen Freund triffst", 1)
+SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_IN_GROUP_DESCRIPTION, "Spielermarkierung aktivieren, wenn Sie in einer Gruppe sind", 1)
+SafeAddString(TOXICPLAYERS_OPTION_RETICLE_IN_GROUP_MARKER_TOOLTIP, "Wenn ausgewählt, zeigt ToxicPlayers einen Marker an, selbst wenn Sie in einer Gruppe sind", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_MUTED_DESCRIPTION,   "Aktiviere ToxicPlayer über verstummt Spieler", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_MUTED_TOOLTIP,       "Ist diese Option deaktiviert, denn ToxicPlayers wird nicht aktiviert, wenn du einen verstummt Spieler triffst (MuteList Add-on ist erforderlich)", 1)
 SafeAddString(TOXICPLAYERS_OPTION_DISPLAY_IGNORED_DESCRIPTION, "Aktiviere ToxicPlayer über ignorierte Spieler", 1)
