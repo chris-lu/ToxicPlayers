@@ -108,7 +108,7 @@ end
 function TP.SetReticleStyle(style, text, hidden, marker)
     ZO_ReticleContainerReticle:SetColor(style.color:UnpackRGB())
     local settings = TP.getSettings()
-    if marker then
+    if marker and (settings.displayInGroups or not IsUnitGrouped("player")) then
         AssignTargetMarkerToReticleTarget(style.marker or GetUnitTargetMarkerType('reticleover'))
     end
 
@@ -147,25 +147,21 @@ end
 function TP.GetPlayerType(unitTag)
     local settings = TP.getSettings()
 
-    if settings.displayInGroups or not IsUnitGrouped("player") then
-        if settings.displayOnIgnored and IsUnitIgnored(unitTag) then
-            return TYPE_IGNORED
-            -- Display friends
-        elseif settings.displayOnFriends and IsUnitFriend(unitTag) then
-            return TYPE_FRIENDS
-            -- Display on guild mates
-        elseif settings.displayOnGuild and TP.IsUnitGuildMate(unitTag) then
-            return TYPE_GUILD
-            -- Display on blacklisted users from a guild
-        elseif settings.displayOnGuildBlacklist and TP.IsUnitGuildBlacklist(unitTag) then
-            return TYPE_BLACKLIST
-            -- No list, but save info
-        elseif settings.displayOnUnknown then
-            return TYPE_UNKNOWN
-            -- No list, reset.
-        else
-            return nil
-        end
+    if settings.displayOnIgnored and IsUnitIgnored(unitTag) then
+        return TYPE_IGNORED
+        -- Display friends
+    elseif settings.displayOnFriends and IsUnitFriend(unitTag) then
+        return TYPE_FRIENDS
+        -- Display on guild mates
+    elseif settings.displayOnGuild and TP.IsUnitGuildMate(unitTag) then
+        return TYPE_GUILD
+        -- Display on blacklisted users from a guild
+    elseif settings.displayOnGuildBlacklist and TP.IsUnitGuildBlacklist(unitTag) then
+        return TYPE_BLACKLIST
+        -- No list, but save info
+    elseif settings.displayOnUnknown then
+        return TYPE_UNKNOWN
+        -- No list, reset.
     else
         return nil
     end
