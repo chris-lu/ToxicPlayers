@@ -29,7 +29,7 @@ ToxicPlayers = {
         automaticPlayerInfo = false,
         positionName = TOP,
         positionIcon = BOTTOM,
-        variableVersion = 4,
+        variableVersion = 5,
         friendList = {}
     },
     STYLES = {
